@@ -1,0 +1,42 @@
+package com.ankur.keepurl.logic.api.mapper;
+
+import org.springframework.stereotype.Component;
+
+import com.ankur.keepurl.dataaccess.entity.UserLink;
+import com.ankur.keepurl.logic.api.model.UserLinkDto;
+
+@Component
+public class UserLinkMapper {
+
+	public UserLinkDto mapEntityToDto(UserLink entity) {
+		if (entity == null) {
+			return null;
+		}
+		UserLinkDto dto = new UserLinkDto();
+		dto.setId(entity.getId());
+		dto.setTitle(entity.getTitle());
+		dto.setUrl(entity.getUrl());
+		return dto;
+	}
+	
+	public UserLink mapDtoToEntity(UserLinkDto dto) {
+		if (dto == null) {
+			return null;
+		}
+		UserLink entity = new UserLink();
+		entity.setId(dto.getId());
+		entity.setTitle(dto.getTitle());
+		entity.setUrl(dto.getUrl());
+		return entity;
+	}
+	
+	public UserLink mapDtoToEntity(UserLinkDto dto, UserLink entity) {
+		if (dto == null) {
+			return null;
+		}
+		entity.setId(dto.getId());
+		entity.setTitle(dto.getTitle());
+		entity.setUrl(dto.getUrl());
+		return entity;
+	}
+}

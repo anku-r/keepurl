@@ -1,3 +1,4 @@
+### Default ###
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -6,6 +7,27 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
-.mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
-.mvn/wrapper/maven-wrapper.jar
+
+### Apache Derby ###
+/keepurldb
+derby.log
+
+### VS Code ###
+.vscode/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
