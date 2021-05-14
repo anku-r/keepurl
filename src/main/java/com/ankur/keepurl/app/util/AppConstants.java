@@ -1,6 +1,6 @@
 package com.ankur.keepurl.app.util;
 
-public interface AppConstants {
+public final class AppConstants {
 	
 	public static final String ERROR = "error";
 	

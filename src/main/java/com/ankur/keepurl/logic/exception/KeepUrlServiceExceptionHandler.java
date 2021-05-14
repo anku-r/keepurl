@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import com.ankur.keepurl.app.util.AppConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
 @ControllerAdvice
-public class KeepUrlServiceExceptionHandler implements AppConstants {
+public class KeepUrlServiceExceptionHandler {
 	
 	@ExceptionHandler(KeepUrlServiceException.class)
 	public ResponseEntity<Error> handleException(KeepUrlServiceException ex) {

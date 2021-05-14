@@ -11,14 +11,14 @@ import lombok.Data;
 
 @Data
 @XmlRootElement
-public class UserLinkDto implements AppConstants {
+public class UserLinkDto {
 
 	private Long id;
 	
-	@NotNull(message = REQUIRED)
-	@Size(min = 1, message = REQUIRED)
+	@NotNull(message = AppConstants.REQUIRED)
+	@Size(min = 1, message = AppConstants.REQUIRED)
 	private String title;
 	
-	@NotEmpty(message = REQUIRED)
+	@NotEmpty(message = AppConstants.REQUIRED)
 	private String url;
 }

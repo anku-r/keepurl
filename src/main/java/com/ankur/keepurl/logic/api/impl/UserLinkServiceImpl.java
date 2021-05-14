@@ -20,7 +20,7 @@ import com.ankur.keepurl.logic.exception.RequestNotFoundException;
 import com.ankur.keepurl.logic.exception.UrlDetailAlreadyExistException;
 
 @Service
-public class UserLinkServiceImpl implements UserLinkService, AppConstants {
+public class UserLinkServiceImpl implements UserLinkService {
 
 	@Autowired
 	private UserLinkRepository repository;
@@ -51,7 +51,7 @@ public class UserLinkServiceImpl implements UserLinkService, AppConstants {
 		
 		Optional<UserLink> userLink = repository.findByTitle(title);
 		if (!userLink.isPresent()) {
-			throw new RequestNotFoundException(URL_NOTFOUND_MSG);
+			throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 		}
 		return mapper.mapEntityToDto(userLink.get());
 	}
@@ -74,13 +74,13 @@ public class UserLinkServiceImpl implements UserLinkService, AppConstants {
 			
 			Optional<UserLink> userLinkOpt = repository.findById(userLinkDto.getId());
 			if (!userLinkOpt.isPresent()) {
-				throw new RequestNotFoundException(URL_NOTFOUND_MSG);
+				throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 			}
 			UserLink userLink = repository.save(mapper
 					.mapDtoToEntity(userLinkDto, userLinkOpt.get()));
 			return mapper.mapEntityToDto(userLink);		
 		} else {
-			throw new KeepUrlServiceException(URL_ID_NOTFOUND_MSG);
+			throw new KeepUrlServiceException(AppConstants.URL_ID_NOTFOUND_MSG);
 		}
 	}
 
