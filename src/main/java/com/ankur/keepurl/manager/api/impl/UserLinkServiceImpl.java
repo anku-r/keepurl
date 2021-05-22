@@ -10,13 +10,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ankur.keepurl.app.exception.KeepUrlServiceException;
+import com.ankur.keepurl.app.exception.RequestNotFoundException;
+import com.ankur.keepurl.app.exception.UrlDetailAlreadyExistException;
 import com.ankur.keepurl.app.util.AppConstants;
 import com.ankur.keepurl.dataaccess.entity.UserLink;
 import com.ankur.keepurl.dataaccess.repository.UserLinkRepository;
-import com.ankur.keepurl.logic.api.model.UserLinkDto;
-import com.ankur.keepurl.logic.exception.KeepUrlServiceException;
-import com.ankur.keepurl.logic.exception.RequestNotFoundException;
-import com.ankur.keepurl.logic.exception.UrlDetailAlreadyExistException;
+import com.ankur.keepurl.logic.manager.model.UserLinkDto;
 import com.ankur.keepurl.manager.api.UserLinkService;
 import com.ankur.keepurl.manager.api.mapper.UserLinkMapper;
 

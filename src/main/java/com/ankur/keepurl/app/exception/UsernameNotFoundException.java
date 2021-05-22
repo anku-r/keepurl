@@ -1,4 +1,4 @@
-package com.ankur.keepurl.logic.exception;
+package com.ankur.keepurl.app.exception;
 
 import org.springframework.http.HttpStatus;
 

@@ -2,7 +2,7 @@ package com.ankur.keepurl.manager.api;
 
 import java.util.List;
 
-import com.ankur.keepurl.logic.api.model.UserLinkDto;
+import com.ankur.keepurl.logic.manager.model.UserLinkDto;
 
 public interface UserLinkService {
 

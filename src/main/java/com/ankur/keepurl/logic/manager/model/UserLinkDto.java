@@ -1,4 +1,4 @@
-package com.ankur.keepurl.logic.api.model;
+package com.ankur.keepurl.logic.manager.model;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
