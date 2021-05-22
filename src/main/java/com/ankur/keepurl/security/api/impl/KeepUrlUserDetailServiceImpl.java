@@ -27,8 +27,7 @@ public class KeepUrlUserDetailServiceImpl implements UserDetailsService {
 		Optional<UserAccess> userAccess = repository.findByUsername(username);
 		if (!userAccess.isPresent()) {
 			throw new UsernameNotFoundException();
-		}
-		
+		}	
 		return mapper.mapEntityToUserDetail(userAccess.get());
 	}
 	

@@ -6,13 +6,13 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ankur.keepurl.dataaccess.entity.UserAccess;
 import com.ankur.keepurl.dataaccess.entity.UserRole;
 
 @SuppressWarnings("serial")
-@Component
+@Service
 public class UserDetailMapper {
 
 	public UserDetails mapEntityToUserDetail(UserAccess userAccess) {

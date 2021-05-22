@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,31 +28,27 @@ public class UserLinkRestController {
 	private UserLinkService service;
 	
 	@GetMapping
-	public List<UserLinkDto> listURLs() {
+	public List<UserLinkDto> getURLs() {
 		return service.getAllURLs();
 	}
 	
 	@GetMapping("{id}")
 	public UserLinkDto getURL(@PathVariable("id") Long id) {
-		
 		return service.getURLById(id);
 	}
 	
-	@GetMapping(params = "title", produces = MediaType.APPLICATION_XML_VALUE)
-	public UserLinkDto getURL(@RequestParam("title") String title) {
-		
+	@GetMapping(params = "title")
+	public UserLinkDto getURL(@RequestParam("title") String title) {	
 		return service.getURLByName(title);
 	}
 	
 	@PostMapping
-	public UserLinkDto createURL(@Valid @RequestBody UserLinkDto userLinkDto) {
-		
+	public UserLinkDto createURL(@Valid @RequestBody UserLinkDto userLinkDto) {	
 		return service.createUrl(userLinkDto);
 	}
 	
 	@PutMapping
-	public UserLinkDto updateURL(@Valid @RequestBody UserLinkDto userLinkDto) {
-		
+	public UserLinkDto updateURL(@Valid @RequestBody UserLinkDto userLinkDto) {	
 		try {
 			return service.updateUrl(userLinkDto);
 		} catch (DataIntegrityViolationException e) {

@@ -43,7 +43,7 @@ public class KeepURLAppLogger {
 			
 			if (returnValue instanceof List<?>) {
 				LOGGER.info("Exiting Method [" + methodName + ", " 
-									+ ((List<?>) returnValue).size() + " Objects received]");
+									+ ((List<?>) returnValue).size() + " Objects]");
 			} else {
 				LOGGER.info("Exiting Method [" + methodName + ", " + returnValue + "]");
 			}
