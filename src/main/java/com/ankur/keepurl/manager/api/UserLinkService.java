@@ -1,4 +1,4 @@
-package com.ankur.keepurl.logic.api;
+package com.ankur.keepurl.manager.api;
 
 import java.util.List;
 

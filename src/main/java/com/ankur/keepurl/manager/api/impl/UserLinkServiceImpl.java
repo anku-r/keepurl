@@ -1,4 +1,4 @@
-package com.ankur.keepurl.logic.api.impl;
+package com.ankur.keepurl.manager.api.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,18 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ankur.keepurl.app.util.AppConstants;
 import com.ankur.keepurl.dataaccess.entity.UserLink;
 import com.ankur.keepurl.dataaccess.repository.UserLinkRepository;
-import com.ankur.keepurl.logic.api.UserLinkService;
-import com.ankur.keepurl.logic.api.mapper.UserLinkMapper;
 import com.ankur.keepurl.logic.api.model.UserLinkDto;
 import com.ankur.keepurl.logic.exception.KeepUrlServiceException;
 import com.ankur.keepurl.logic.exception.RequestNotFoundException;
 import com.ankur.keepurl.logic.exception.UrlDetailAlreadyExistException;
+import com.ankur.keepurl.manager.api.UserLinkService;
+import com.ankur.keepurl.manager.api.mapper.UserLinkMapper;
 
 @Service
+@Transactional
 public class UserLinkServiceImpl implements UserLinkService {
 
 	@Autowired

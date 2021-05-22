@@ -8,10 +8,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.ankur.keepurl.logic.api.KeepUrlUserDetailService;
 
 @Configuration
 @EnableWebSecurity
@@ -19,7 +18,7 @@ import com.ankur.keepurl.logic.api.KeepUrlUserDetailService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private KeepUrlUserDetailService service;
+	private UserDetailsService service;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

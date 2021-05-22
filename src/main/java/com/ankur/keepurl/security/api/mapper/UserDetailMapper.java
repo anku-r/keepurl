@@ -1,4 +1,4 @@
-package com.ankur.keepurl.logic.api.mapper;
+package com.ankur.keepurl.security.api.mapper;
 
 import java.util.ArrayList;
 import java.util.Collection;

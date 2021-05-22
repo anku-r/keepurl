@@ -1,4 +1,4 @@
-package com.ankur.keepurl.logic.api.mapper;
+package com.ankur.keepurl.manager.api.mapper;
 
 import org.springframework.stereotype.Component;
 
