@@ -92,7 +92,7 @@ public class UserLinkServiceImpl implements UserLinkService {
 		
 		Optional<UserLink> userLink = repository.findById(id);
 		if (!userLink.isPresent()) {
-			throw new RequestNotFoundException();
+			throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 		}
 		repository.delete(userLink.get());
 	}

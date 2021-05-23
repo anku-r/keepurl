@@ -27,7 +27,7 @@ public class KeepURLAppLogger {
 		final Logger LOGGER = LoggerFactory
 							.getLogger(joinPoint.getTarget().getClass());
 		
-		String methodName = ((MethodSignature) joinPoint
+		final String methodName = ((MethodSignature) joinPoint
 							.getSignature()).getMethod().getName();;
 		
 		String args = "";
@@ -50,10 +50,10 @@ public class KeepURLAppLogger {
 			
 			return returnValue;
 		
-		} catch (Throwable e) {
+		} catch (Throwable exception) {
 			
-			LOGGER.error("Exception on Method " + methodName, e);
-			throw e.getCause();
+			LOGGER.error("Exception on Method " + methodName + ": " + exception.getMessage(), exception);
+			throw exception;
 		}		
 	}
 }
