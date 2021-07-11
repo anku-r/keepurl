@@ -8,8 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.ankur.keepurl.dataaccess.entity.UserAccess;
-import com.ankur.keepurl.dataaccess.entity.UserRole;
+import com.ankur.keepurl.dataaccess.document.UserAccess;
+import com.ankur.keepurl.dataaccess.document.UserRole;
 
 @SuppressWarnings("serial")
 @Service

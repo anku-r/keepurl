@@ -8,10 +8,6 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 
-### Apache Derby ###
-/keepurldb
-derby.log
-
 ### VS Code ###
 .vscode/
 

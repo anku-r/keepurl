@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ankur.keepurl.app.exception.UrlDetailAlreadyExistException;
@@ -23,7 +22,7 @@ import com.ankur.keepurl.manager.api.UserLinkService;
 @RestController
 @RequestMapping("${keepurl.userlink.endpoint}")
 public class UserLinkRestController {
-
+	
 	@Autowired
 	private UserLinkService service;
 	
@@ -33,13 +32,8 @@ public class UserLinkRestController {
 	}
 	
 	@GetMapping("{id}")
-	public UserLinkDto getURL(@PathVariable("id") Long id) {
+	public UserLinkDto getURL(@PathVariable("id") String id) {
 		return service.getURLById(id);
-	}
-	
-	@GetMapping(params = "title")
-	public UserLinkDto getURL(@RequestParam("title") String title) {	
-		return service.getURLByName(title);
 	}
 	
 	@PostMapping
@@ -57,7 +51,7 @@ public class UserLinkRestController {
 	}
 	
 	@DeleteMapping("{id}")
-	public void deleteURL(@PathVariable("id") Long id) {
+	public void deleteURL(@PathVariable("id") String id) {
 		service.deleteUrl(id);
 	}
 }

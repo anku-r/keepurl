@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +13,7 @@ import com.ankur.keepurl.app.exception.KeepUrlServiceException;
 import com.ankur.keepurl.app.exception.RequestNotFoundException;
 import com.ankur.keepurl.app.exception.UrlDetailAlreadyExistException;
 import com.ankur.keepurl.app.util.AppConstants;
-import com.ankur.keepurl.dataaccess.entity.UserLink;
+import com.ankur.keepurl.dataaccess.document.UserLink;
 import com.ankur.keepurl.dataaccess.repository.UserLinkRepository;
 import com.ankur.keepurl.logic.manager.model.UserLinkDto;
 import com.ankur.keepurl.manager.api.UserLinkService;
@@ -39,21 +38,11 @@ public class UserLinkServiceImpl implements UserLinkService {
 	}
 
 	@Override
-	public UserLinkDto getURLById(Long id) {
+	public UserLinkDto getURLById(String id) {
 		
 		Optional<UserLink> userLink = repository.findById(id);
 		if (!userLink.isPresent()) {
 			throw new RequestNotFoundException();
-		}
-		return mapper.mapEntityToDto(userLink.get());
-	}
-
-	@Override
-	public UserLinkDto getURLByName(String title) {
-		
-		Optional<UserLink> userLink = repository.findByTitle(title);
-		if (!userLink.isPresent()) {
-			throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 		}
 		return mapper.mapEntityToDto(userLink.get());
 	}
@@ -87,8 +76,7 @@ public class UserLinkServiceImpl implements UserLinkService {
 	}
 
 	@Override
-	@PreAuthorize("hasAuthority('ADMIN')")
-	public void deleteUrl(Long id) {
+	public void deleteUrl(String id) {
 		
 		Optional<UserLink> userLink = repository.findById(id);
 		if (!userLink.isPresent()) {

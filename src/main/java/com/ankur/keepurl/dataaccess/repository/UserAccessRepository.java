@@ -2,11 +2,11 @@ package com.ankur.keepurl.dataaccess.repository;
 
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.ankur.keepurl.dataaccess.entity.UserAccess;
+import com.ankur.keepurl.dataaccess.document.UserAccess;
 
-public interface UserAccessRepository extends JpaRepository<UserAccess, Long> {
+public interface UserAccessRepository extends MongoRepository<UserAccess, String> {
 
 	Optional<UserAccess> findByUsername(String userName);
 }

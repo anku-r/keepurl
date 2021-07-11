@@ -8,14 +8,12 @@ public interface UserLinkService {
 
 	public List<UserLinkDto> getAllURLs();
 	
-	public UserLinkDto getURLById(Long id);
-	
-	public UserLinkDto getURLByName(String title);
+	public UserLinkDto getURLById(String id);
 	
 	public UserLinkDto createUrl(UserLinkDto userLinkDto);
 	
 	public UserLinkDto updateUrl(UserLinkDto userLinkDto);
 	
-	public void deleteUrl(Long id);
+	public void deleteUrl(String id);
 
 }
