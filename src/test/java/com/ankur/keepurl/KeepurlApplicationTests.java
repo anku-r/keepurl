@@ -10,12 +10,6 @@ import com.ankur.keepurl.manager.api.UserLinkService;
 
 @SpringBootTest
 class KeepurlApplicationTests {
-	
-	@Autowired
-	MockMvc mockMvc;
-	
-	@MockBean
-	UserLinkService service;
 
 	@Test
 	void contextLoads() {
