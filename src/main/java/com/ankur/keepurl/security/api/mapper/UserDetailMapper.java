@@ -54,8 +54,8 @@ public class UserDetailMapper {
 			@Override
 			public Collection<? extends GrantedAuthority> getAuthorities() {
 				return userAccess.getUserRoles().stream()
-						.map(role -> new SimpleGrantedAuthority(role.getRole()))
-						.collect(Collectors.toList());
+							.map(role -> new SimpleGrantedAuthority(role.getRole()))
+							.collect(Collectors.toList());
 			}
 		};
 	}
