@@ -1,3 +1,4 @@
+
 package com.ankur.keepurl.controller;
 
 import java.io.IOException;
@@ -22,8 +23,8 @@ public class KeepURLRestController {
 	    HTMLDocument htmlDoc = (HTMLDocument) htmlKit.createDefaultDocument();
 	    HTMLEditorKit.Parser parser = new ParserDelegator();
 	    try {
-			parser.parse(new InputStreamReader(new URL(url).openStream()),
-			            htmlDoc.getReader(0), true);
+			parser.parse(new InputStreamReader(
+					new URL(url).openStream()), htmlDoc.getReader(0), true);
 			return htmlDoc.getProperty("title").toString();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -16,9 +16,9 @@ import com.ankur.keepurl.app.exception.UrlDetailAlreadyExistException;
 import com.ankur.keepurl.app.util.AppConstants;
 import com.ankur.keepurl.dataaccess.document.UserLink;
 import com.ankur.keepurl.dataaccess.repository.UserLinkRepository;
-import com.ankur.keepurl.logic.manager.model.UserLinkDto;
 import com.ankur.keepurl.manager.api.UserLinkService;
 import com.ankur.keepurl.manager.api.mapper.UserLinkMapper;
+import com.ankur.keepurl.manager.model.UserLinkDto;
 
 @Service
 @Transactional

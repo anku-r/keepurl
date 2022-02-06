@@ -3,7 +3,7 @@ package com.ankur.keepurl.manager.api.mapper;
 import org.springframework.stereotype.Service;
 
 import com.ankur.keepurl.dataaccess.document.UserLink;
-import com.ankur.keepurl.logic.manager.model.UserLinkDto;
+import com.ankur.keepurl.manager.model.UserLinkDto;
 
 @Service
 public class UserLinkMapper {

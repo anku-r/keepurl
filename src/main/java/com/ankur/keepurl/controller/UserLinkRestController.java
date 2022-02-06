@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ankur.keepurl.app.exception.UrlDetailAlreadyExistException;
-import com.ankur.keepurl.logic.manager.model.UserLinkDto;
 import com.ankur.keepurl.manager.api.UserLinkService;
+import com.ankur.keepurl.manager.model.UserLinkDto;
 
 @RestController
 @RequestMapping("${keepurl.userlink.endpoint}")
