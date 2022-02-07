@@ -1,8 +1,6 @@
 package com.ankur.keepurl.security.api.mapper;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.ankur.keepurl.dataaccess.document.UserAccess;
-import com.ankur.keepurl.dataaccess.document.UserRole;
 
 @SuppressWarnings("serial")
 @Service
