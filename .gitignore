@@ -8,6 +8,9 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 
+### Temp ###
+src/main/resources/prometheus.yml
+
 ### VS Code ###
 .vscode/
 

@@ -2,6 +2,7 @@ package com.ankur.keepurl.manager.api.mapper;
 
 import org.springframework.stereotype.Service;
 
+import com.ankur.keepurl.app.util.URLUtility;
 import com.ankur.keepurl.dataaccess.document.UserLink;
 import com.ankur.keepurl.manager.model.UserLinkDto;
 
@@ -20,14 +21,7 @@ public class UserLinkMapper {
 	}
 	
 	public UserLink mapDtoToEntity(UserLinkDto dto) {
-		if (dto == null) {
-			return null;
-		}
-		UserLink entity = new UserLink();
-		entity.setId(dto.getId());
-		entity.setTitle(dto.getTitle());
-		entity.setUrl(dto.getUrl());
-		return entity;
+		return mapDtoToEntity(dto, new UserLink());
 	}
 	
 	public UserLink mapDtoToEntity(UserLinkDto dto, UserLink entity) {
@@ -35,7 +29,11 @@ public class UserLinkMapper {
 			return null;
 		}
 		entity.setId(dto.getId());
-		entity.setTitle(dto.getTitle());
+		if (dto.getTitle() == null || dto.getTitle().isEmpty()) {
+			entity.setTitle(URLUtility.fetchTitle(dto.getUrl()));
+		} else {
+			entity.setTitle(dto.getTitle());
+		}
 		entity.setUrl(dto.getUrl());
 		return entity;
 	}

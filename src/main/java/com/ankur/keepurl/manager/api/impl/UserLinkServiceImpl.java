@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,7 +76,6 @@ public class UserLinkServiceImpl implements UserLinkService {
 	}
 
 	@Override
-	@PreAuthorize("hasAuthority('ADMIN')")
 	public void deleteUrl(String id) {
 		
 		Optional<UserLink> userLink = repository.findById(id);
