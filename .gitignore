@@ -29,4 +29,5 @@ src/main/resources/prometheus.yml
 *.iml
 *.ipr
 
-
+### Mac ###
+.DS_Store
