@@ -1,22 +1,19 @@
 const endpoint = "api/userlink";
+
 $(document).ready(function () {
 
-	$.ajax({
-		type: "GET",
-		url: endpoint
-	}).done(function (data) {
+	$.get(endpoint).done(function(data) {
 		$.each(data, function (index, value) {
 			addRow(value);
 		});
 	});
 
-	$("form").submit(function (event) {
+	$("form").submit(function(event) {
 		var formData = {
 			title: $("#title").val(),
 			url: $("#url").val(),
 		};
-		$.ajax({
-			type: "POST",
+		$.post({
 			url: endpoint,
 			data: JSON.stringify(formData),
 			contentType: "application/json; charset=utf-8",
