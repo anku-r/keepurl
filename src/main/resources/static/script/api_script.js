@@ -1,4 +1,10 @@
+const TABLE_ID = "#urlList";
+const TITLE_ID = "#title"
 const endpoint = "api/userlink";
+const URL_ID = "#url";
+const CONTENT_TYPE = "application/json; charset=utf-8";
+const EMPTY = "";
+const DELETE_CL = ".del";
 
 $(document).ready(function () {
 
@@ -10,24 +16,24 @@ $(document).ready(function () {
 
 	$("form").submit(function(event) {
 		var formData = {
-			title: $("#title").val(),
-			url: $("#url").val(),
+			title: $(TITLE_ID).val(),
+			url: $(URL_ID).val(),
 		};
 		$.post({
 			url: endpoint,
 			data: JSON.stringify(formData),
-			contentType: "application/json; charset=utf-8",
+			contentType: CONTENT_TYPE,
 			encode: true
 		}).done(function (data) {
 			addRow(data);
-			$("#url").val("");
-			$("#title").val("");
+			$(TITLE_ID).val(EMPTY);
+			$(URL_ID).val(EMPTY);
 		});
 		event.preventDefault();
 	});
 
 	const addRow = function (value) {
-		$("#urlList").find('tbody')
+		$(TABLE_ID).find('tbody')
 			.append($('<tr>')
 				.attr('id', value.id)
 				.append($('<td>')
@@ -56,7 +62,7 @@ $(document).ready(function () {
 			);
 	}
 
-	$("#urlList").on("click", ".del", function () {
+	$(TABLE_ID).on("click", DELETE_CL, function () {
 		var id = $(this).val();
 		$.ajax({
 			type: "DELETE",
