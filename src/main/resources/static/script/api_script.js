@@ -2,7 +2,7 @@ const TABLE_ID = "#urlList";
 const TITLE_ID = "#title"
 const endpoint = "api/userlink";
 const URL_ID = "#url";
-const CONTENT_TYPE = "application/json; charset=utf-8";
+const CT_JSON = "application/json; charset=utf-8";
 const EMPTY = "";
 const DELETE_CL = ".del";
 
@@ -15,14 +15,14 @@ $(document).ready(function () {
 	});
 
 	$("form").submit(function(event) {
-		var formData = {
+		var fd = {
 			title: $(TITLE_ID).val(),
 			url: $(URL_ID).val(),
 		};
 		$.post({
 			url: endpoint,
-			data: JSON.stringify(formData),
-			contentType: CONTENT_TYPE,
+			data: JSON.stringify(fd),
+			contentType: CT_JSON,
 			encode: true
 		}).done(function (data) {
 			addRow(data);
