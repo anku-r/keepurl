@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ankur.keepurl.app.util.URLUtility;
 
 @Service
-@EnableScheduling
+//@EnableScheduling
 public class AvoidHerokuSleep {
 	
 	@Autowired
