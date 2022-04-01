@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ankur.keepurl.app.exception.KeepUrlServiceException;
+
 @RestController
 @RequestMapping("api/deploy")
 public class DeployerController {
@@ -25,11 +27,16 @@ public class DeployerController {
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deploy(@RequestBody LinkedHashMap<String, Object> payload) throws IOException {
-		if (payload.get("ref").equals("refs/head/main")) {
-			logger.info("Calling Deployment Script");
+		if (payload.containsKey("refs")) {
+			logger.error("Github Webhook: Property 'refs' missing");
+			throw new KeepUrlServiceException("Property 'refs' missing. Cannot determine branch");
+		}
+		if (payload.get("refs").toString().contains("/main")) {
+			logger.info("Github Webhook: Calling Deployment Script");
 			Runtime.getRuntime().exec(env.getProperty("devop.dir")+"/deploy.sh");
 			return "Deployment Triggered";
 		}
+		logger.info("Github Webhook: Skipping Deployment as non main branch pushed");
 		return "Deployment Skipped";
 	}
 }
