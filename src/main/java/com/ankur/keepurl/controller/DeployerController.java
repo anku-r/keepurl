@@ -31,7 +31,7 @@ public class DeployerController {
 			logger.error("Github Webhook: Property 'refs' missing");
 			throw new KeepUrlServiceException("Property 'refs' missing. Cannot determine branch");
 		}
-		if (payload.get("refs").toString().contains("/main")) {
+		if (payload.get("ref").toString().contains("/main")) {
 			logger.info("Github Webhook: Calling Deployment Script");
 			Runtime.getRuntime().exec(env.getProperty("devop.dir")+"/deploy.sh");
 			return "Deployment Triggered";
