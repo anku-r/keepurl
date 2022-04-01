@@ -11,7 +11,7 @@ echo "Setting Data Source"
 export MONGO_KEEPURL_DATASOURCE="mongodb+srv://ankur:Dmth26587@keep-url.p75hm.mongodb.net/keepurldb?retryWrites=true&w=majority"
 
 echo "Stopping application"
-kill `ps -ef | grep "keepurl" | awk 'NR==1{ print $2 }'`
+kill `ps -ef | awk '$10 ~ /keepurl/{print $2}'`
 
 echo "Removing old log file"
 cd devop
