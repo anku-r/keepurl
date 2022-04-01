@@ -16,7 +16,8 @@ public class DeployerController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public void deploy(@RequestBody String payload) {
+	public String deploy(@RequestBody String payload) {
 		logger.info("Deployment OK: " + payload);
+		return "Deployment Executed";
 	}
 }
