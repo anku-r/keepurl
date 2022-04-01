@@ -1,5 +1,7 @@
 package com.ankur.keepurl.controller;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,8 +18,9 @@ public class DeployerController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public String deploy(@RequestBody String payload) {
-		logger.info("Deployment OK: " + payload);
+	public String deploy(@RequestBody String payload) throws IOException {
+		logger.info("Calling Deployment Script");
+		Runtime.getRuntime().exec("devop/deploy.sh");
 		return "Deployment Triggered";
 	}
 }
