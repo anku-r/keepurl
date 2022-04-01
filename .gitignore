@@ -31,3 +31,6 @@ src/main/resources/prometheus.yml
 
 ### Mac ###
 .DS_Store
+
+### Linux ###
+nohup.out

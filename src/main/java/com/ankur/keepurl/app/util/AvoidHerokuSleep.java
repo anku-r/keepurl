@@ -1,12 +1,10 @@
-package com.ankur.keepurl.app.scheduler;
+package com.ankur.keepurl.app.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.ankur.keepurl.app.util.URLUtility;
 
 @Service
 //@EnableScheduling
