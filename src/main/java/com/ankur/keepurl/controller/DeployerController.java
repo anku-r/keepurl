@@ -27,7 +27,7 @@ public class DeployerController {
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deploy(@RequestBody LinkedHashMap<String, Object> payload) throws IOException {
-		if (payload.containsKey("refs")) {
+		if (!payload.containsKey("refs")) {
 			logger.error("Github Webhook: Property 'refs' missing");
 			throw new KeepUrlServiceException("Property 'refs' missing. Cannot determine branch");
 		}
