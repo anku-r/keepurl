@@ -18,6 +18,6 @@ public class DeployerController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deploy(@RequestBody String payload) {
 		logger.info("Deployment OK: " + payload);
-		return "Deployment Executed";
+		return "Deployment Triggered";
 	}
 }
