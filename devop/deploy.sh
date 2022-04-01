@@ -18,6 +18,6 @@ cd devop
 rm nohup.out
 
 echo "Starting application"
-nohup java -jar ../target/keepurl-0.0.1-SNAPSHOT.jar
+nohup java -jar -Ddevop.dir=$PWD ../target/keepurl-0.0.1-SNAPSHOT.jar
 
 echo "Deployment Complete"
