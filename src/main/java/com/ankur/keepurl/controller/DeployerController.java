@@ -20,7 +20,8 @@ public class DeployerController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deploy(@RequestBody String payload) throws IOException {
 		logger.info("Calling Deployment Script");
-		Runtime.getRuntime().exec("devop/deploy.sh");
+		System.out.println("PWD : " + System.getProperty("java.class.path"));
+		Runtime.getRuntime().exec("/home/keepurl/devop/deploy.sh");
 		return "Deployment Triggered";
 	}
 }
