@@ -1,16 +1,11 @@
 package com.ankur.keepurl.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +21,6 @@ public class DeploymentController {
 	
 	private static final String BRANCH_KEY = "ref";
 
-	@Autowired
-	private Environment env;
-
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deploy(@RequestBody LinkedHashMap<String, Object> payload) throws IOException {
@@ -39,18 +31,10 @@ public class DeploymentController {
 		}
 		if (payload.get(BRANCH_KEY).toString().contains("/main")) {
 			logger.info("Calling Deployment Script");
-			Runtime.getRuntime().exec(env.getProperty("devop.dir") + "/deploy.sh");
+			Runtime.getRuntime().exec("./deploy.sh");
 			return "Deployment Triggered";
 		}
 		logger.info("Skipping Deployment as non main branch pushed");
 		return "Deployment Skipped";
-	}
-	
-	@GetMapping
-	public String getPWD() throws IOException {
-		Process proc = Runtime.getRuntime().exec("pwd");
-		BufferedReader br = new BufferedReader(
-				new InputStreamReader(proc.getInputStream()));		
-		return br.readLine();
 	}
 }
