@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +19,11 @@ import com.ankur.keepurl.app.exception.KeepUrlServiceException;
 public class DeploymentController {
 
 	private static Logger logger = LoggerFactory.getLogger(DeploymentController.class);
-	
+
 	private static final String BRANCH_KEY = "ref";
+
+	@Value("devop.dir")
+	private String devopDir;
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -31,7 +35,7 @@ public class DeploymentController {
 		}
 		if (payload.get(BRANCH_KEY).toString().contains("/main")) {
 			logger.info("Calling Deployment Script");
-			Runtime.getRuntime().exec("./deploy.sh");
+			Runtime.getRuntime().exec(devopDir + "./deploy.sh");
 			return "Deployment Triggered";
 		}
 		logger.info("Skipping Deployment as non main branch pushed");
