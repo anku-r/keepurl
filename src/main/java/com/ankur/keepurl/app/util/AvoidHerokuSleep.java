@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 //@EnableScheduling
 public class AvoidHerokuSleep {
 	
-	@Value("HEROKU_KEEPURL")
-	private String herokuAppURL;
+	@Value("${HEROKU_KEEPURL}")
+	private String herokuKeepURL;
 	
 	/**
 	 * This method will try access application every 20 minute
@@ -17,6 +17,6 @@ public class AvoidHerokuSleep {
 	 */
 	@Scheduled(fixedDelay = 1200000)
 	public void accessApplication() {
-		URLUtility.fetchTitle(herokuAppURL);
+		URLUtility.fetchTitle(herokuKeepURL);
 	}
 }

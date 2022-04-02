@@ -22,7 +22,7 @@ public class DeploymentController {
 
 	private static final String BRANCH_KEY = "ref";
 
-	@Value("devop.dir")
+	@Value("${devop.dir}")
 	private String devopDir;
 
 	@PostMapping
