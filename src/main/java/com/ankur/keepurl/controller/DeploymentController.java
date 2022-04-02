@@ -37,7 +37,7 @@ public class DeploymentController {
 		}
 		if (payload.get(BRANCH_KEY).toString().contains(BRANCH)) {
 			logger.info("Calling Deployment Script");
-			Runtime.getRuntime().exec("nohup " + devopDir + DEPLOYMENT_SCRIPT);
+			Runtime.getRuntime().exec(devopDir + DEPLOYMENT_SCRIPT);
 			return "Deployment Triggered";
 		}
 		logger.info("Skipping Deployment as non main branch pushed");
