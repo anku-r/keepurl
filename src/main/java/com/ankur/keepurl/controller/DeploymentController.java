@@ -21,6 +21,8 @@ public class DeploymentController {
 	private static Logger logger = LoggerFactory.getLogger(DeploymentController.class);
 
 	private static final String BRANCH_KEY = "ref";
+	private static final String BRANCH = "/main";
+	private static final String DEPLOYMENT_SCRIPT = "/deploy.sh";
 
 	@Value("${devop.dir}")
 	private String devopDir;
@@ -33,9 +35,9 @@ public class DeploymentController {
 			logger.error("Property 'refs' missing");
 			throw new KeepUrlServiceException("Property 'refs' missing. Cannot determine branch");
 		}
-		if (payload.get(BRANCH_KEY).toString().contains("/main")) {
+		if (payload.get(BRANCH_KEY).toString().contains(BRANCH)) {
 			logger.info("Calling Deployment Script");
-			Runtime.getRuntime().exec(devopDir + "./deploy.sh");
+			Runtime.getRuntime().exec(devopDir + DEPLOYMENT_SCRIPT);
 			return "Deployment Triggered";
 		}
 		logger.info("Skipping Deployment as non main branch pushed");
