@@ -17,26 +17,29 @@ import com.ankur.keepurl.app.exception.KeepUrlServiceException;
 
 @RestController
 @RequestMapping("api/deploy")
-public class DeployerController {
+public class DeploymentController {
+
+	private static Logger logger = LoggerFactory.getLogger(DeploymentController.class);
 	
-	private static Logger logger = LoggerFactory.getLogger(DeployerController.class);
-	
+	private static final String BRANCH_KEY = "ref";
+
 	@Autowired
 	private Environment env;
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
 	public String deploy(@RequestBody LinkedHashMap<String, Object> payload) throws IOException {
-		if (!payload.containsKey("ref")) {
-			logger.error("Github Webhook: Property 'refs' missing");
+		logger.info("Github Webhook Invoked");
+		if (!payload.containsKey(BRANCH_KEY)) {
+			logger.error("Property 'refs' missing");
 			throw new KeepUrlServiceException("Property 'refs' missing. Cannot determine branch");
 		}
-		if (payload.get("ref").toString().contains("/main")) {
-			logger.info("Github Webhook: Calling Deployment Script");
-			Runtime.getRuntime().exec(env.getProperty("devop.dir")+"/deploy.sh");
+		if (payload.get(BRANCH_KEY).toString().contains("/main")) {
+			logger.info("Calling Deployment Script");
+			Runtime.getRuntime().exec(env.getProperty("devop.dir") + "/deploy.sh");
 			return "Deployment Triggered";
 		}
-		logger.info("Github Webhook: Skipping Deployment as non main branch pushed");
+		logger.info("Skipping Deployment as non main branch pushed");
 		return "Deployment Skipped";
 	}
 }
