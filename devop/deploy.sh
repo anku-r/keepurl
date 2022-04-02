@@ -5,7 +5,6 @@ export MONGO_KEEPURL_DATASOURCE=`cat /appinfo/prop/MONGO_KEEPURL_DATASOURCE`
 export LOG_LEVEL=`cat /appinfo/prop/LOG_LEVEL`
 
 echo "Pulling latest code and Firing Build"
-cd ..
 git pull origin main
 mvn clean install -Dmaven.test.skip=true
 
