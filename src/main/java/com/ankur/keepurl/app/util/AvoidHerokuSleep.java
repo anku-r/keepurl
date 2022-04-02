@@ -1,6 +1,7 @@
 package com.ankur.keepurl.app.util;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -8,15 +9,15 @@ import org.springframework.stereotype.Service;
 //@EnableScheduling
 public class AvoidHerokuSleep {
 	
-	@Value("${HEROKU_KEEPURL}")
-	private String herokuKeepURL;
+	@Autowired
+	private Environment env;
 	
 	/**
 	 * This method will try access application every 20 minute
-	 * in order to avoid sleep enforced by HEROKU free plan.
+	 * in order to avoid application sleep enforced by HEROKU free plan.
 	 */
 	@Scheduled(fixedDelay = 1200000)
 	public void accessApplication() {
-		URLUtility.fetchTitle(herokuKeepURL);
+		URLUtility.fetchTitle(env.getProperty("HEROKU_KEEPURL"));
 	}
 }
