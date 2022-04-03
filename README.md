@@ -1,6 +1,6 @@
 # keepurl
 * API to Manage Bookmarks
 * Spring Boot & Security
-* Deployed on heroku
+* Deployed on Debian VM and Heroku App Service (Automatic Deployment via Webhooks)
 * Mongo DB Atlas
-* simple jQuery AJAX to manage UI
+* Simple jQuery AJAX to manage UI
