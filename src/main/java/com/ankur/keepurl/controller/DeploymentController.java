@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +21,7 @@ public class DeploymentController {
 
 	private static final String BRANCH_KEY = "ref";
 	private static final String BRANCH = "/main";
-	private static final String DEPLOYMENT_SCRIPT = "/deploy.sh fileout";
-
-	@Value("${devop.dir}")
-	private String devopDir;
+	private static final String DEPLOYMENT_SCRIPT = "devop/deploy.sh fileout";
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
@@ -36,8 +32,8 @@ public class DeploymentController {
 			throw new KeepUrlServiceException("Property 'refs' missing. Cannot determine branch");
 		}
 		if (payload.get(BRANCH_KEY).toString().contains(BRANCH)) {
-			logger.info("Calling Deployment Script");
-			Runtime.getRuntime().exec(devopDir + DEPLOYMENT_SCRIPT);
+			logger.info("Calling Deployment Script: {}", DEPLOYMENT_SCRIPT);
+			Runtime.getRuntime().exec(DEPLOYMENT_SCRIPT);
 			return "Deployment Triggered";
 		}
 		logger.info("Skipping Deployment as non main branch pushed");
