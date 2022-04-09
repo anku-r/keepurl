@@ -22,7 +22,7 @@ public class DeploymentController {
 
 	private static final String BRANCH_KEY = "ref";
 	private static final String BRANCH = "/main";
-	private static final String DEPLOYMENT_SCRIPT = "/deploy.sh";
+	private static final String DEPLOYMENT_SCRIPT = "/deploy.sh fileout";
 
 	@Value("${devop.dir}")
 	private String devopDir;
