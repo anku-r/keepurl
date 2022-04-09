@@ -1,6 +1,8 @@
-# keepurl
+# Keep URL
+### Store Important links and access them anywhere
 * API to Manage Bookmarks
-* Spring Boot & Security
-* Deployed on Debian VM and Heroku App Service (Automatic Deployment via Webhooks)
+* Spring Boot
 * Mongo DB Atlas
 * Simple jQuery AJAX to manage UI
+* Continous Deployment on Debian VM using Github Webhooks and Shell Script)
+* Continous Deployment on Heroku App Service
