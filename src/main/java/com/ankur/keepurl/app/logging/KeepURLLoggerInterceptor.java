@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class KeepURLAppLogger {
+public class KeepURLLoggerInterceptor {
 	
 	@Pointcut("execution (* com.ankur.keepurl.manager.api.*.*(..))")
 	public void servicePackage() {}
@@ -26,33 +26,23 @@ public class KeepURLAppLogger {
 		
 		final Logger LOGGER = LoggerFactory
 							.getLogger(joinPoint.getTarget().getClass());
-		
 		final String methodName = ((MethodSignature) joinPoint
-							.getSignature()).getMethod().getName();;
-		
-		String args = "";
+								.getSignature()).getMethod().getName();;		
+		StringBuilder args = new StringBuilder();
 		for (Object arg : joinPoint.getArgs()) {
-			 args = ", " + arg.toString();
-		}
-		
-		LOGGER.info("Entering Method [" + methodName + args + "]");
-		
-		try {
-			
-			Object returnValue = joinPoint.proceed();
-			
+			 args.append(", ").append(arg.toString());
+		}		
+		LOGGER.info("Entering Method [{}{}]", methodName, args.toString());		
+		try {		
+			Object returnValue = joinPoint.proceed();	
 			if (returnValue instanceof List<?>) {
-				LOGGER.info("Exiting Method [" + methodName + ", " 
-									+ ((List<?>) returnValue).size() + " Objects]");
+				LOGGER.info("Exiting Method [{}, {} Objects]", methodName, ((List<?>)returnValue).size());
 			} else {
-				LOGGER.info("Exiting Method [" + methodName + ", " + returnValue + "]");
-			}
-			
-			return returnValue;
-		
-		} catch (Throwable exception) {
-			
-			LOGGER.error("Exception on Method " + methodName + ": " + exception.getMessage(), exception);
+				LOGGER.info("Exiting Method [{}, {}]", methodName, returnValue);
+			}		
+			return returnValue;		
+		} catch (Throwable exception) {			
+			LOGGER.error("Exception on Method {}: {}", methodName, exception.getMessage());
 			throw exception;
 		}		
 	}
