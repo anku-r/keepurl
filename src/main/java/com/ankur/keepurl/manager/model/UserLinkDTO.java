@@ -7,7 +7,7 @@ import com.ankur.keepurl.app.util.AppConstants;
 import lombok.Data;
 
 @Data
-public class UserLinkDto {
+public class UserLinkDTO {
 
 	private String id;
 	

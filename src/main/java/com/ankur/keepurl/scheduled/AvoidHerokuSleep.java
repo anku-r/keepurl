@@ -1,12 +1,15 @@
-package com.ankur.keepurl.app.util;
+package com.ankur.keepurl.scheduled;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.ankur.keepurl.app.util.URLUtility;
+
 @Service
-//@EnableScheduling
+@ConditionalOnProperty(name="HEROKU_KEEPURL")
 public class AvoidHerokuSleep {
 	
 	@Autowired

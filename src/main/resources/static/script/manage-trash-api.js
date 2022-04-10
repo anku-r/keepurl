@@ -1,10 +1,8 @@
 const TABLE_ID = "#urlList";
-const TITLE_ID = "#title"
-const endpoint = "api/userlink";
-const URL_ID = "#url";
-const CT_JSON = "application/json; charset=utf-8";
-const EMPTY = "";
+const endpoint = "api/trash";
+const RESTORE_PATH = "/restore/"
 const DELETE_CL = ".del";
+const RESTORE_CL = ".res";
 
 $(document).ready(function () {
 
@@ -14,30 +12,16 @@ $(document).ready(function () {
 		});
 	});
 
-	$("form").submit(function(event) {
-		var fd = {
-			title: $(TITLE_ID).val(),
-			url: $(URL_ID).val(),
-		};
-		$.post({
-			url: endpoint,
-			data: JSON.stringify(fd),
-			contentType: CT_JSON,
-			encode: true
-		}).done(function (data) {
-			addRow(data);
-			$(TITLE_ID).val(EMPTY);
-			$(URL_ID).val(EMPTY);
-		});
-		event.preventDefault();
-	});
-
 	const addRow = function (value) {
 		$(TABLE_ID).find('tbody')
 			.append($('<tr>')
 				.attr('id', value.id)
 				.append($('<td>')
 					.text(value.title)
+				)
+                .append($('<td>')
+					.attr('class', 'bold-text')
+					.text(value.date)
 				)
 				.append($('<td>')
 					.append($('<div>')
@@ -46,13 +30,23 @@ $(document).ready(function () {
 							.attr('class', 'btn btn-primary')
 							.attr('href', value.url)
 							.attr('target', '_blank')
+                            .attr('title', 'Go to URL')
 							.append($('<i>')
 								.attr('class', 'fa-solid fa-arrow-up-right-from-square')
 							)
 						)
-						.append($('<button>')
-							.attr('class', 'btn btn-secondary del')
+                        .append($('<button>')
+							.attr('class', 'btn btn-secondary res')
 							.attr('value', value.id)
+                            .attr('title', 'Restore')
+							.append($('<i>')
+								.attr('class', 'fa-solid fa-rotate-left')
+							)
+						)
+						.append($('<button>')
+							.attr('class', 'btn btn-danger del')
+							.attr('value', value.id)
+                            .attr('title', 'Permanently Delete')
 							.append($('<i>')
 								.attr('class', 'fa-solid fa-trash-can')
 							)
@@ -63,12 +57,19 @@ $(document).ready(function () {
 	}
 
 	$(TABLE_ID).on("click", DELETE_CL, function () {
-		var id = $(this).val();
+		removeFromTrash("/", $(this).val())
+	});
+
+    $(TABLE_ID).on("click", RESTORE_CL, function () {
+		removeFromTrash(RESTORE_PATH, $(this).val())
+	});
+
+    const removeFromTrash = function(path, id) {
 		$.ajax({
 			type: "DELETE",
-			url: endpoint.concat("/", id)
+			url: endpoint.concat(path, id)
 		}).done(function (data) {
 			$("#" + id).remove();
 		});
-	});
+    }
 });

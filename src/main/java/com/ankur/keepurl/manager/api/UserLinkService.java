@@ -2,17 +2,17 @@ package com.ankur.keepurl.manager.api;
 
 import java.util.List;
 
-import com.ankur.keepurl.manager.model.UserLinkDto;
+import com.ankur.keepurl.manager.model.UserLinkDTO;
 
 public interface UserLinkService {
 
-	public List<UserLinkDto> getAllURLs();
+	public List<UserLinkDTO> getAllURLs();
 	
-	public UserLinkDto getURLById(String id);
+	public UserLinkDTO getURLById(String id);
 	
-	public UserLinkDto createUrl(UserLinkDto userLinkDto);
+	public UserLinkDTO createUrl(UserLinkDTO userLinkDto);
 	
-	public UserLinkDto updateUrl(UserLinkDto userLinkDto);
+	public UserLinkDTO updateUrl(UserLinkDTO userLinkDto);
 	
 	public void deleteUrl(String id);
 
