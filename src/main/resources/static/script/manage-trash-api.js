@@ -65,11 +65,10 @@ $(document).ready(function () {
 	});
 
     const removeFromTrash = function(path, id) {
+		$("#" + id).remove();
 		$.ajax({
 			type: "DELETE",
 			url: endpoint.concat(path, id)
-		}).done(function (data) {
-			$("#" + id).remove();
 		});
     }
 });

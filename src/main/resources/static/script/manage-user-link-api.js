@@ -66,11 +66,10 @@ $(document).ready(function () {
 
 	$(TABLE_ID).on("click", DELETE_CL, function () {
 		var id = $(this).val();
+		$("#" + id).remove();
 		$.ajax({
 			type: "DELETE",
 			url: endpoint.concat("/", id)
-		}).done(function (data) {
-			$("#" + id).remove();
 		});
 	});
 });
