@@ -50,7 +50,6 @@ public class TrashServiceImpl implements TrashService {
 		}
 		Trash trashLink = deleteTrash(id);
 		userLinkDAO.save(mapper.mapTrashToLink(trashLink));
-		repository.delete(trashLink);
 	}
 
 	@Override
@@ -79,8 +78,8 @@ public class TrashServiceImpl implements TrashService {
 	@Transactional
 	public void trashCleanup() {
 		LocalDate dateToClean = LocalDate.now().minusDays(5);
-		logger.info("Cleaning up trash for date: {}", dateToClean);
 		List<Trash> trashLinks = repository.findByDate(dateToClean);
+		logger.info("Cleaning up trash for date {}. {} URLs found", dateToClean, trashLinks.size());
 		repository.deleteAll(trashLinks);
 	}
 
