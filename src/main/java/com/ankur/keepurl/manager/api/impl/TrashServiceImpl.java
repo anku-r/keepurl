@@ -78,7 +78,7 @@ public class TrashServiceImpl implements TrashService {
 	@Transactional
 	public void trashCleanup() {
 		LocalDate dateToClean = LocalDate.now().minusDays(5);
-		List<Trash> trashLinks = repository.findByDate(dateToClean);
+		List<Trash> trashLinks = repository.findByDateLessThanEqual(dateToClean);
 		logger.info("Cleaning up trash for date {}. {} URLs found", dateToClean, trashLinks.size());
 		repository.deleteAll(trashLinks);
 	}

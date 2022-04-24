@@ -13,5 +13,5 @@ public interface TrashRepository extends MongoRepository<Trash, String>{
 	 * @param date
 	 * @return List of links deleted on certain date
 	 */
-	public List<Trash> findByDate(LocalDate date);
+	public List<Trash> findByDateLessThanEqual(LocalDate date);
 }
