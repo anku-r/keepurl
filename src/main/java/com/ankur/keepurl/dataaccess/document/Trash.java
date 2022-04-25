@@ -19,4 +19,6 @@ public class Trash {
 	private String url;
 	
 	private LocalDate date;
+	
+	private String user;
 }

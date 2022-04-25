@@ -15,4 +15,6 @@ public class UserLink {
 	private String title;
 	
 	private String url;
+	
+	private String user;
 }

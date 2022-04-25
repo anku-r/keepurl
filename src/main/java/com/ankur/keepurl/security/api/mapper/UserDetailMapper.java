@@ -8,19 +8,24 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.ankur.keepurl.dataaccess.document.UserAccess;
+import com.ankur.keepurl.app.exception.KeepUrlServiceException;
+import com.ankur.keepurl.dataaccess.document.UserData;
 
 @SuppressWarnings("serial")
 @Service
 public class UserDetailMapper {
 
-	public UserDetails mapEntityToUserDetail(UserAccess userAccess) {
-
+	public UserDetails mapEntityToUserDetail(UserData userData) {
+		
+		if (userData == null) {
+			throw new KeepUrlServiceException("User Data has not been received");
+		}
+		
 		return new UserDetails() {
 
 			@Override
 			public boolean isEnabled() {
-				return userAccess.getIsEnabled();
+				return userData.getIsEnabled();
 			}
 
 			@Override
@@ -40,19 +45,19 @@ public class UserDetailMapper {
 
 			@Override
 			public String getUsername() {
-				return userAccess.getUsername();
+				return userData.getUsername();
 			}
 
 			@Override
 			public String getPassword() {
-				return userAccess.getPassword();
+				return userData.getPassword();
 			}
 
 			@Override
 			public Collection<? extends GrantedAuthority> getAuthorities() {
-				return userAccess.getUserRoles().stream()
-							.map(role -> new SimpleGrantedAuthority(role.getRole()))
-							.collect(Collectors.toList());
+				return userData.getRoles().stream()
+								.map(SimpleGrantedAuthority::new)
+								.collect(Collectors.toList());
 			}
 		};
 	}

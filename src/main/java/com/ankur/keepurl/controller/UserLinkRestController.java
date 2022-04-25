@@ -1,5 +1,6 @@
 package com.ankur.keepurl.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -27,31 +28,31 @@ public class UserLinkRestController {
 	private UserLinkService service;
 	
 	@GetMapping
-	public List<UserLinkDTO> getURLs() {
-		return service.getAllURLs();
+	public List<UserLinkDTO> getURLs(Principal user) {
+		return service.getAllURLs(user.getName());
 	}
 	
 	@GetMapping("{id}")
-	public UserLinkDTO getURL(@PathVariable("id") String id) {
-		return service.getURLById(id);
+	public UserLinkDTO getURL(@PathVariable("id") String id, Principal user) {
+		return service.getURLById(id, user.getName());
 	}
 	
 	@PostMapping
-	public UserLinkDTO createURL(@Valid @RequestBody UserLinkDTO userLinkDto) {	
-		return service.createUrl(userLinkDto);
+	public UserLinkDTO createURL(@Valid @RequestBody UserLinkDTO userLinkDto, Principal user) {	
+		return service.createUrl(userLinkDto, user.getName());
 	}
 	
 	@PutMapping
-	public UserLinkDTO updateURL(@Valid @RequestBody UserLinkDTO userLinkDto) {	
+	public UserLinkDTO updateURL(@Valid @RequestBody UserLinkDTO userLinkDto, Principal user) {	
 		try {
-			return service.updateUrl(userLinkDto);
+			return service.updateUrl(userLinkDto, user.getName());
 		} catch (DataIntegrityViolationException e) {
 			throw new UrlDetailAlreadyExistException();
 		}
 	}
 	
 	@DeleteMapping("{id}")
-	public void deleteURL(@PathVariable("id") String id) {
-		service.deleteUrl(id);
+	public void deleteURL(@PathVariable("id") String id, Principal user) {
+		service.deleteUrl(id, user.getName());
 	}
 }

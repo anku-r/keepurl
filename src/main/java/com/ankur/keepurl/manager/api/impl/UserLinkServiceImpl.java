@@ -34,17 +34,17 @@ public class UserLinkServiceImpl implements UserLinkService {
 	private TrashService trashService;
 
 	@Override
-	public List<UserLinkDTO> getAllURLs() {
+	public List<UserLinkDTO> getAllURLs(String user) {
 		
-		List<UserLink> userLinks = repository.findAll();
+		List<UserLink> userLinks = repository.findByUser(user);
 		return userLinks.stream().map(mapper::mapEntityToDto)
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public UserLinkDTO getURLById(String id) {
+	public UserLinkDTO getURLById(String id, String user) {
 		
-		Optional<UserLink> userLink = repository.findById(id);
+		Optional<UserLink> userLink = repository.findByIdAndUser(id, user);
 		if (!userLink.isPresent()) {
 			throw new RequestNotFoundException();
 		}
@@ -52,9 +52,10 @@ public class UserLinkServiceImpl implements UserLinkService {
 	}
 
 	@Override
-	public UserLinkDTO createUrl(UserLinkDTO userLinkDto) {	
+	public UserLinkDTO createUrl(UserLinkDTO userLinkDto, String user) {	
 		
 		try {
+			userLinkDto.setUser(user);
 			UserLink userLink = repository.save(mapper.mapDtoToEntity(userLinkDto));
 			return mapper.mapEntityToDto(userLink);
 		} catch (DataIntegrityViolationException e) {
@@ -63,10 +64,11 @@ public class UserLinkServiceImpl implements UserLinkService {
 	}
 
 	@Override
-	public UserLinkDTO updateUrl(UserLinkDTO userLinkDto) {
+	public UserLinkDTO updateUrl(UserLinkDTO userLinkDto, String user) {
 		
-		if (userLinkDto.getId() != null) {			
-			Optional<UserLink> userLinkOpt = repository.findById(userLinkDto.getId());
+		if (userLinkDto.getId() != null) {	
+			userLinkDto.setUser(user);
+			Optional<UserLink> userLinkOpt = repository.findByIdAndUser(userLinkDto.getId(), user);
 			if (!userLinkOpt.isPresent()) {
 				throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 			}
@@ -78,9 +80,9 @@ public class UserLinkServiceImpl implements UserLinkService {
 	}
 
 	@Override
-	public void deleteUrl(String id) {
+	public void deleteUrl(String id, String user) {
 		
-		Optional<UserLink> userLink = repository.findById(id);
+		Optional<UserLink> userLink = repository.findByIdAndUser(id, user);
 		if (!userLink.isPresent()) {
 			throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 		}

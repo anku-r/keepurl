@@ -1,5 +1,6 @@
 package com.ankur.keepurl.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,17 @@ public class TrashRestController {
 	private TrashService service;
 	
 	@GetMapping
-	public List<TrashDTO> getTrashLinks() {
-		return service.getAllLinks();
+	public List<TrashDTO> getTrashLinks(Principal user) {
+		return service.getAllLinks(user.getName());
 	}
 	
 	@DeleteMapping("{id}")
-	public void deleteTrashLink(@PathVariable("id") String id) {
-		service.delete(id);
+	public void deleteTrashLink(@PathVariable("id") String id, Principal user) {
+		service.delete(id, user.getName());
 	}
 	
 	@DeleteMapping("restore/{id}")
-	public void restoreLink(@PathVariable("id") String id) {
-		service.restore(id);
+	public void restoreLink(@PathVariable("id") String id, Principal user) {
+		service.restore(id, user.getName());
 	}
 }

@@ -4,19 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 import lombok.ToString;
 
-@Document(collection = "USER_ACCESS")
+@Document(collection = "USER_DATA")
 @Data
-public class UserAccess {
+public class UserData {
 	
 	@Id
-	private String id;
-	
 	private String username;
 	
 	private Boolean isEnabled;
@@ -24,14 +23,13 @@ public class UserAccess {
 	@ToString.Exclude
 	private String password;
 	
-	@DBRef
-	private List<UserRole> userRoles;
+	@Setter(value = AccessLevel.NONE)
+	private List<String> roles;
 	
-	public void addRole(UserRole role) {
-		if (userRoles == null) {
-			userRoles = new ArrayList<>();
+	public void addRole(String role) {
+		if (roles == null) {
+			roles = new ArrayList<>();
 		}
-		userRoles.add(role);
-	}
-	
+		roles.add(role);
+	}	
 }

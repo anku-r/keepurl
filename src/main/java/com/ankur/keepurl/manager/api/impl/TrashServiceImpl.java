@@ -44,29 +44,29 @@ public class TrashServiceImpl implements TrashService {
 
 	@Override
 	@Transactional
-	public void restore(String id) {
-		if (userLinkDAO.existsById(id)) {
+	public void restore(String id, String user) {
+		if (userLinkDAO.existsByIdAndUser(id, user)) {
 			throw new UrlDetailAlreadyExistException();
 		}
-		Trash trashLink = deleteTrash(id);
+		Trash trashLink = deleteTrash(id, user);
 		userLinkDAO.save(mapper.mapTrashToLink(trashLink));
 	}
 
 	@Override
-	public List<TrashDTO> getAllLinks() {
-		return repository.findAll().stream()
+	public List<TrashDTO> getAllLinks(String user) {
+		return repository.findByUser(user).stream()
 						.map(mapper::mapEntityToDto)
 						.collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional
-	public void delete(String id) {
-		deleteTrash(id);
+	public void delete(String id, String user) {
+		deleteTrash(id, user);
 	}
 	
-	private Trash deleteTrash(String id) {
-		Optional<Trash> trashLink = repository.findById(id);
+	private Trash deleteTrash(String id, String user) {
+		Optional<Trash> trashLink = repository.findByIdAndUser(id, user);
 		if (!trashLink.isPresent()) {
 			throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 		}
