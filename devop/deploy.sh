@@ -15,6 +15,9 @@ echo $PRETEXT "Running Deployment:" `date`
 echo $PRETEXT "Setting environment variables"
 export MONGO_KEEPURL_DATASOURCE=`cat $PROPDIR/MONGO_KEEPURL_DATASOURCE`
 export LOG_LEVEL=`cat $PROPDIR/LOG_LEVEL`
+export KEEPURL_KEYSTORE_PATH=`cat $PROPDIR/KEEPURL_KEYSTORE_PATH`
+export KEEPURL_KEYSTORE_PATH=`cat $PROPDIR/KEEPURL_KEYSTORE_PASSWORD`
+export KEEPURL_KEYSTORE_PATH=`cat $PROPDIR/KEEPURL_KEYSTORE_ALIAS`
 
 echo $PRETEXT "Pulling latest code and Firing Build"
 git pull origin main
