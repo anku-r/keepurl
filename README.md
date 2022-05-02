@@ -4,5 +4,4 @@
 * Spring Boot
 * Mongo DB Atlas
 * Simple jQuery AJAX to manage UI
-* Continous Deployment on Debian VM using Github Webhooks and Shell Script)
-* Continous Deployment on Heroku App Service
+* Continous Deployment on Debian VM using Github Webhooks and Shell Script
