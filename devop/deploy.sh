@@ -3,7 +3,7 @@
 
 PRETEXT=[INFO]
 LOGDIR=/appinfo/keepurl/log
-PROPDIR=/appinfo/keepurl/prop
+PROPFILE=/appinfo/keepurl/prop/envconfig.properties
 
 if [ "$1" == "fileout" ] 
 then
@@ -13,21 +13,20 @@ fi
 echo $PRETEXT "Running Deployment:" `date` 
 
 echo $PRETEXT "Setting environment variables"
-export MONGO_KEEPURL_DATASOURCE=`cat $PROPDIR/MONGO_KEEPURL_DATASOURCE`
-export LOG_LEVEL=`cat $PROPDIR/LOG_LEVEL`
-export KEEPURL_KEYSTORE_PATH=`cat $PROPDIR/KEEPURL_KEYSTORE_PATH`
-export KEEPURL_KEYSTORE_PATH=`cat $PROPDIR/KEEPURL_KEYSTORE_PASSWORD`
-export KEEPURL_KEYSTORE_PATH=`cat $PROPDIR/KEEPURL_KEYSTORE_ALIAS`
+while IFS='=' read -r key value
+do
+    export $key=$value
+done < $PROPFILE
 
 echo $PRETEXT "Pulling latest code and Firing Build"
 git pull origin main
 mvn clean install -Dmaven.test.skip=true
 
 echo $PRETEXT "Stopping application"
-port=`ps -ef | awk '$10 ~ /keepurl/{print $2}'`
-if [ "$port" != "" ] 
+app_pid=`ps -ef | awk '$10 ~ /keepurl/{print $2}'`
+if [ "$app_pid" != "" ] 
 then
-    kill $port
+    kill $app_pid
 fi 
 
 echo $PRETEXT "Starting application. Check sysout.log for more information"
