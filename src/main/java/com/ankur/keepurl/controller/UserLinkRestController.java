@@ -21,7 +21,7 @@ import com.ankur.keepurl.manager.api.UserLinkService;
 import com.ankur.keepurl.manager.model.UserLinkDTO;
 
 @RestController
-@RequestMapping("${keepurl.userlink.endpoint}")
+@RequestMapping("api/userlink")
 public class UserLinkRestController {
 	
 	@Autowired

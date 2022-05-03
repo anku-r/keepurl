@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ankur.keepurl.app.util.URLUtility;
 
 @RestController
-@RequestMapping("${keepurl.endpoint}")
+@RequestMapping("api/keepurl")
 public class KeepURLRestController {
 
 	@GetMapping(path = "title", params = "url")
