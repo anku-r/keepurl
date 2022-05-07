@@ -28,8 +28,8 @@ public class DeploymentController {
 	public String deploy(@RequestBody LinkedHashMap<String, Object> payload) throws IOException {
 		logger.info("Github Webhook Invoked");
 		if (!payload.containsKey(BRANCH_KEY)) {
-			logger.error("Property 'refs' missing");
-			throw new KeepUrlServiceException("Property 'refs' missing. Cannot determine branch");
+			logger.error("Property {} missing", BRANCH_KEY);
+			throw new KeepUrlServiceException("Property " + BRANCH_KEY + " missing. Cannot determine branch");
 		}
 		if (payload.get(BRANCH_KEY).toString().contains(BRANCH)) {
 			logger.info("Calling Deployment Script: {}", DEPLOYMENT_SCRIPT);
