@@ -6,7 +6,7 @@ const RESTORE_CL = ".res";
 
 $(document).ready(function () {
 
-	$.get(endpoint).done(function(data) {
+	$.get(endpoint).done(function (data) {
 		$.each(data, function (index, value) {
 			addRow(value);
 		});
@@ -19,7 +19,7 @@ $(document).ready(function () {
 				.append($('<td>')
 					.text(value.title)
 				)
-                .append($('<td>')
+				.append($('<td>')
 					.attr('class', 'bold-text')
 					.text(value.date)
 				)
@@ -30,15 +30,15 @@ $(document).ready(function () {
 							.attr('class', 'btn btn-primary')
 							.attr('href', value.url)
 							.attr('target', '_blank')
-                            .attr('title', 'Go to URL')
+							.attr('title', 'Go to URL')
 							.append($('<i>')
 								.attr('class', 'fa-solid fa-arrow-up-right-from-square')
 							)
 						)
-                        .append($('<button>')
+						.append($('<button>')
 							.attr('class', 'btn btn-secondary res')
 							.attr('value', value.id)
-                            .attr('title', 'Restore')
+							.attr('title', 'Restore')
 							.append($('<i>')
 								.attr('class', 'fa-solid fa-rotate-left')
 							)
@@ -46,7 +46,7 @@ $(document).ready(function () {
 						.append($('<button>')
 							.attr('class', 'btn btn-danger del')
 							.attr('value', value.id)
-                            .attr('title', 'Permanently Delete')
+							.attr('title', 'Permanently Delete')
 							.append($('<i>')
 								.attr('class', 'fa-solid fa-trash-can')
 							)
@@ -60,15 +60,15 @@ $(document).ready(function () {
 		removeFromTrash("/", $(this).val())
 	});
 
-    $(TABLE_ID).on("click", RESTORE_CL, function () {
+	$(TABLE_ID).on("click", RESTORE_CL, function () {
 		removeFromTrash(RESTORE_PATH, $(this).val())
 	});
 
-    const removeFromTrash = function(path, id) {
+	const removeFromTrash = function (path, id) {
 		$("#" + id).remove();
 		$.ajax({
 			type: "DELETE",
 			url: endpoint.concat(path, id)
 		});
-    }
+	}
 });

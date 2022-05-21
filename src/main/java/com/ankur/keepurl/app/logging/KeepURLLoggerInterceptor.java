@@ -24,25 +24,29 @@ public class KeepURLLoggerInterceptor {
 	@Around("servicePackage() || securityPackage()")
 	public Object aroundService(ProceedingJoinPoint joinPoint) throws Throwable {
 		
-		final Logger LOGGER = LoggerFactory
+		final Logger logger = LoggerFactory
 							.getLogger(joinPoint.getTarget().getClass());
 		final String methodName = ((MethodSignature) joinPoint
-								.getSignature()).getMethod().getName();;		
-		StringBuilder args = new StringBuilder();
-		for (Object arg : joinPoint.getArgs()) {
-			 args.append(", ").append(arg.toString());
-		}		
-		LOGGER.info("Entering Method [{}{}]", methodName, args.toString());		
+								.getSignature()).getMethod().getName();;
+		if (logger.isDebugEnabled()) {		
+			StringBuilder args = new StringBuilder();
+			for (Object arg : joinPoint.getArgs()) {
+				args.append(", ").append(arg.toString());
+			}		
+			logger.debug("Entering Method [{}{}]", methodName, args.toString());
+		}	
 		try {		
-			Object returnValue = joinPoint.proceed();	
-			if (returnValue instanceof List<?>) {
-				LOGGER.info("Exiting Method [{}, {} Objects]", methodName, ((List<?>)returnValue).size());
-			} else {
-				LOGGER.info("Exiting Method [{}, {}]", methodName, returnValue);
+			Object returnValue = joinPoint.proceed();
+			if (logger.isDebugEnabled()) {	
+				if (returnValue instanceof List<?>) {
+					logger.debug("Exiting Method [{}, {} Objects]", methodName, ((List<?>)returnValue).size());
+				} else {
+					logger.debug("Exiting Method [{}, {}]", methodName, returnValue);
+				}
 			}		
 			return returnValue;		
 		} catch (Throwable exception) {			
-			LOGGER.error("Exception on Method {}: {}", methodName, exception.getMessage());
+			logger.error("Exception on Method {}: {}", methodName, exception.getMessage());
 			throw exception;
 		}		
 	}
