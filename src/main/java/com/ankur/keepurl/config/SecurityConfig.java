@@ -1,4 +1,4 @@
-package com.ankur.keepurl;
+package com.ankur.keepurl.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
