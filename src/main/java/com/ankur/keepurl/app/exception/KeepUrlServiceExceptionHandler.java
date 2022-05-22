@@ -3,6 +3,8 @@ package com.ankur.keepurl.app.exception;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,11 +17,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mongodb.MongoSocketReadTimeoutException;
 
 import lombok.Data;
 
 @ControllerAdvice
 public class KeepUrlServiceExceptionHandler {
+    
+    private static Logger logger = LoggerFactory.getLogger(KeepUrlServiceExceptionHandler.class);
 
     @ExceptionHandler(KeepUrlServiceException.class)
     public ResponseEntity<Error> handleException(KeepUrlServiceException ex) {
@@ -48,6 +53,11 @@ public class KeepUrlServiceExceptionHandler {
     public ResponseEntity<Error> handleException(AccessDeniedException ex) {
 	return exceptionResponse(HttpStatus.FORBIDDEN,
 		"You are unauthorized to access the content or perform this action");
+    }
+    
+    @ExceptionHandler(MongoSocketReadTimeoutException.class)
+    public void handleException(MongoSocketReadTimeoutException ex) {
+	logger.error("Mongo DB Read Timeout");
     }
 
     @ExceptionHandler(Exception.class)
