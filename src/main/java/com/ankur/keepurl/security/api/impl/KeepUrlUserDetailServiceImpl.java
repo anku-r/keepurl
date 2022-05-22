@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.ankur.keepurl.app.exception.UsernameNotFoundException;
 import com.ankur.keepurl.dataaccess.document.UserData;
 import com.ankur.keepurl.dataaccess.repository.UserDataRepository;
 import com.ankur.keepurl.security.api.mapper.UserDetailMapper;
@@ -25,7 +25,7 @@ public class KeepUrlUserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
 	Optional<UserData> userData = repository.findById(username);
 	if (!userData.isPresent()) {
-	    throw new UsernameNotFoundException();
+	    throw new UsernameNotFoundException("User Not Found");
 	}
 	return mapper.mapEntityToUserDetail(userData.get());
     }
