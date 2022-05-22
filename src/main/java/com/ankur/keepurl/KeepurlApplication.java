@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class KeepurlApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(KeepurlApplication.class, args);
-	}
+    public static void main(String[] args) {
+	SpringApplication.run(KeepurlApplication.class, args);
+    }
 }

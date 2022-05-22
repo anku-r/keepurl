@@ -17,21 +17,21 @@ import com.ankur.keepurl.manager.model.TrashDTO;
 @RequestMapping("api/trash")
 public class TrashRestController {
 
-	@Autowired
-	private TrashService service;
-	
-	@GetMapping
-	public List<TrashDTO> getTrashLinks(Principal user) {
-		return service.getAllLinks(user.getName());
-	}
-	
-	@DeleteMapping("{id}")
-	public void deleteTrashLink(@PathVariable("id") String id, Principal user) {
-		service.delete(id, user.getName());
-	}
-	
-	@DeleteMapping("restore/{id}")
-	public void restoreLink(@PathVariable("id") String id, Principal user) {
-		service.restore(id, user.getName());
-	}
+    @Autowired
+    private TrashService service;
+
+    @GetMapping
+    public List<TrashDTO> getTrashLinks(Principal user) {
+	return service.getAllLinks(user.getName());
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteTrashLink(@PathVariable("id") String id, Principal user) {
+	service.delete(id, user.getName());
+    }
+
+    @DeleteMapping("restore/{id}")
+    public void restoreLink(@PathVariable("id") String id, Principal user) {
+	service.restore(id, user.getName());
+    }
 }

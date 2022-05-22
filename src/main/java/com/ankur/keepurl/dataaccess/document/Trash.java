@@ -10,15 +10,15 @@ import lombok.Data;
 @Data
 @Document(collection = "TRASH_LINK")
 public class Trash {
-	
-	@Id
-	private String id;
-	
-	private String title;
-	
-	private String url;
-	
-	private LocalDate date;
-	
-	private String user;
+
+    @Id
+    private String id;
+
+    private String title;
+
+    private String url;
+
+    private LocalDate date;
+
+    private String user;
 }

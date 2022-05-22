@@ -10,13 +10,13 @@ import lombok.Data;
 @Data
 public class UserLinkDTO {
 
-	private String id;
-	
-	private String title;
-	
-	@NotEmpty(message = AppConstants.REQUIRED)
-	private String url;
-	
-	@JsonIgnore
-	private String user;
+    private String id;
+
+    private String title;
+
+    @NotEmpty(message = AppConstants.REQUIRED)
+    private String url;
+
+    @JsonIgnore
+    private String user;
 }

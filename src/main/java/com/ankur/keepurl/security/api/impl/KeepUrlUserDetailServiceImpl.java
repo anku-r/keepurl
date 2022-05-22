@@ -15,20 +15,19 @@ import com.ankur.keepurl.security.api.mapper.UserDetailMapper;
 @Service
 public class KeepUrlUserDetailServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private UserDataRepository repository;
-	
-	@Autowired
-	private UserDetailMapper mapper;
-	
-	@Override
-	public UserDetails loadUserByUsername(String username) {
-		
-		Optional<UserData> userData = repository.findById(username);
-		if (!userData.isPresent()) {
-			throw new UsernameNotFoundException();
-		}	
-		return mapper.mapEntityToUserDetail(userData.get());
+    @Autowired
+    private UserDataRepository repository;
+
+    @Autowired
+    private UserDetailMapper mapper;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+	Optional<UserData> userData = repository.findById(username);
+	if (!userData.isPresent()) {
+	    throw new UsernameNotFoundException();
 	}
-	
+	return mapper.mapEntityToUserDetail(userData.get());
+    }
+
 }

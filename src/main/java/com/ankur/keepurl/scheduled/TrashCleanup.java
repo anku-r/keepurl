@@ -8,16 +8,15 @@ import com.ankur.keepurl.manager.api.TrashService;
 
 @Service
 public class TrashCleanup {
-	
-	@Autowired
-	private TrashService service;
 
-	/**
-	 * This method will cleanup trash 
-	 * and is executed every day at 00:00:00
-	 */
-	@Scheduled(cron = "0 0 0 * * *")
-	public void execute() {	
-		service.trashCleanup();
-	}
+    @Autowired
+    private TrashService service;
+
+    /**
+     * This method will cleanup trash and is executed every day at 00:00:00
+     */
+    @Scheduled(cron = "0 0 0 * * *")
+    public void execute() {
+	service.trashCleanup();
+    }
 }

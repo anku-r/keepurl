@@ -7,14 +7,14 @@ import lombok.Data;
 @Data
 public class TrashDTO {
 
-	private String id;
-	
-	private String title;
-	
-	private String url;
-	
-	private String date;
-	
-	@JsonIgnore
-	private String user;
+    private String id;
+
+    private String title;
+
+    private String url;
+
+    private String date;
+
+    @JsonIgnore
+    private String user;
 }

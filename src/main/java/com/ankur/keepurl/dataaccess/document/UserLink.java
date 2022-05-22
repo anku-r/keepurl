@@ -9,12 +9,12 @@ import lombok.Data;
 @Document(collection = "USER_LINK")
 public class UserLink {
 
-	@Id
-	private String id;
-	
-	private String title;
-	
-	private String url;
-	
-	private String user;
+    @Id
+    private String id;
+
+    private String title;
+
+    private String url;
+
+    private String user;
 }

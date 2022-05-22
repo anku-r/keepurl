@@ -11,8 +11,8 @@ import com.ankur.keepurl.app.util.URLUtility;
 @RequestMapping("api/keepurl")
 public class KeepURLRestController {
 
-	@GetMapping(path = "title", params = "url")
-	public String getURLTitle(@RequestParam("url") String url) {
-		return URLUtility.fetchTitle(url);
-	}
+    @GetMapping(path = "title", params = "url")
+    public String getURLTitle(@RequestParam("url") String url) {
+	return URLUtility.fetchTitle(url);
+    }
 }

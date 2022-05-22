@@ -17,23 +17,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService service;
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(service);
-	}
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		super.configure(http);
-		http.csrf().disable();
-	}
-	
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Autowired
+    private UserDetailsService service;
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	auth.userDetailsService(service);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+	super.configure(http);
+	http.csrf().disable();
+    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+	return new BCryptPasswordEncoder();
+    }
 }

@@ -24,70 +24,64 @@ import com.ankur.keepurl.manager.model.UserLinkDTO;
 @Transactional
 public class UserLinkServiceImpl implements UserLinkService {
 
-	@Autowired
-	private UserLinkRepository repository;
-	
-	@Autowired
-	private UserLinkMapper mapper;
-	
-	@Autowired
-	private TrashService trashService;
+    @Autowired
+    private UserLinkRepository repository;
 
-	@Override
-	public List<UserLinkDTO> getAllURLs(String user) {
-		
-		List<UserLink> userLinks = repository.findByUser(user);
-		return userLinks.stream().map(mapper::mapEntityToDto)
-				.collect(Collectors.toList());
+    @Autowired
+    private UserLinkMapper mapper;
+
+    @Autowired
+    private TrashService trashService;
+
+    @Override
+    public List<UserLinkDTO> getAllURLs(String user) {
+	return repository.findByUser(user).stream()
+			.map(mapper::mapEntityToDto)
+			.collect(Collectors.toList());
+    }
+
+    @Override
+    public UserLinkDTO getURLById(String id, String user) {
+	Optional<UserLink> userLink = repository.findByIdAndUser(id, user);
+	if (!userLink.isPresent()) {
+	    throw new RequestNotFoundException();
 	}
+	return mapper.mapEntityToDto(userLink.get());
+    }
 
-	@Override
-	public UserLinkDTO getURLById(String id, String user) {
-		
-		Optional<UserLink> userLink = repository.findByIdAndUser(id, user);
-		if (!userLink.isPresent()) {
-			throw new RequestNotFoundException();
-		}
-		return mapper.mapEntityToDto(userLink.get());
+    @Override
+    public UserLinkDTO createUrl(UserLinkDTO userLinkDto, String user) {
+	try {
+	    userLinkDto.setUser(user);
+	    UserLink userLink = repository.save(mapper.mapDtoToEntity(userLinkDto));
+	    return mapper.mapEntityToDto(userLink);
+	} catch (DataIntegrityViolationException e) {
+	    throw new UrlDetailAlreadyExistException();
 	}
+    }
 
-	@Override
-	public UserLinkDTO createUrl(UserLinkDTO userLinkDto, String user) {	
-		
-		try {
-			userLinkDto.setUser(user);
-			UserLink userLink = repository.save(mapper.mapDtoToEntity(userLinkDto));
-			return mapper.mapEntityToDto(userLink);
-		} catch (DataIntegrityViolationException e) {
-			throw new UrlDetailAlreadyExistException();
-		}
+    @Override
+    public UserLinkDTO updateUrl(UserLinkDTO userLinkDto, String user) {
+	if (userLinkDto.getId() != null) {
+	    userLinkDto.setUser(user);
+	    Optional<UserLink> userLinkOpt = repository.findByIdAndUser(userLinkDto.getId(), user);
+	    if (!userLinkOpt.isPresent()) {
+		throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
+	    }
+	    UserLink userLink = mapper.mapDtoToEntity(userLinkDto, userLinkOpt.get());
+	    return mapper.mapEntityToDto(userLink);
+	} else {
+	    throw new KeepUrlServiceException(AppConstants.URL_ID_NOTFOUND_MSG);
 	}
+    }
 
-	@Override
-	public UserLinkDTO updateUrl(UserLinkDTO userLinkDto, String user) {
-		
-		if (userLinkDto.getId() != null) {	
-			userLinkDto.setUser(user);
-			Optional<UserLink> userLinkOpt = repository.findByIdAndUser(userLinkDto.getId(), user);
-			if (!userLinkOpt.isPresent()) {
-				throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
-			}
-			UserLink userLink = mapper.mapDtoToEntity(userLinkDto, userLinkOpt.get());
-			return mapper.mapEntityToDto(userLink);		
-		} else {
-			throw new KeepUrlServiceException(AppConstants.URL_ID_NOTFOUND_MSG);
-		}
+    @Override
+    public void deleteUrl(String id, String user) {
+	Optional<UserLink> userLink = repository.findByIdAndUser(id, user);
+	if (!userLink.isPresent()) {
+	    throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 	}
-
-	@Override
-	public void deleteUrl(String id, String user) {
-		
-		Optional<UserLink> userLink = repository.findByIdAndUser(id, user);
-		if (!userLink.isPresent()) {
-			throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
-		}
-		trashService.moveToTrash(userLink.get());
-		repository.delete(userLink.get());
-	}
-
+	trashService.moveToTrash(userLink.get());
+	repository.delete(userLink.get());
+    }
 }
