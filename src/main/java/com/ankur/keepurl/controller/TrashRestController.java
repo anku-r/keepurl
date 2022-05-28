@@ -22,16 +22,16 @@ public class TrashRestController {
 
     @GetMapping
     public List<TrashDTO> getTrashLinks(Principal user) {
-	return service.getAllLinks(user.getName());
+        return service.getAllLinks(user.getName());
     }
 
     @DeleteMapping("{id}")
     public void deleteTrashLink(@PathVariable("id") String id, Principal user) {
-	service.delete(id, user.getName());
+        service.delete(id, user.getName());
     }
 
     @DeleteMapping("restore/{id}")
     public void restoreLink(@PathVariable("id") String id, Principal user) {
-	service.restore(id, user.getName());
+        service.restore(id, user.getName());
     }
 }
