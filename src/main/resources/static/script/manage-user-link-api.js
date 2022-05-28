@@ -8,13 +8,13 @@ const DELETE_CL = ".del";
 
 $(document).ready(function () {
 
-	$.get(endpoint).done(function(data) {
+	$.get(endpoint).done(function (data) {
 		$.each(data, function (index, value) {
 			addRow(value);
 		});
 	});
 
-	$("form").submit(function(event) {
+	$("form").submit(function (event) {
 		var fd = {
 			title: $(TITLE_ID).val(),
 			url: $(URL_ID).val(),

@@ -29,30 +29,30 @@ public class UserLinkRestController {
 
     @GetMapping
     public List<UserLinkDTO> getURLs(Principal user) {
-	return service.getAllURLs(user.getName());
+        return service.getAllURLs(user.getName());
     }
 
     @GetMapping("{id}")
     public UserLinkDTO getURL(@PathVariable("id") String id, Principal user) {
-	return service.getURLById(id, user.getName());
+        return service.getURLById(id, user.getName());
     }
 
     @PostMapping
     public UserLinkDTO createURL(@Valid @RequestBody UserLinkDTO userLinkDto, Principal user) {
-	return service.createUrl(userLinkDto, user.getName());
+        return service.createUrl(userLinkDto, user.getName());
     }
 
     @PutMapping
     public UserLinkDTO updateURL(@Valid @RequestBody UserLinkDTO userLinkDto, Principal user) {
-	try {
-	    return service.updateUrl(userLinkDto, user.getName());
-	} catch (DataIntegrityViolationException e) {
-	    throw new UrlDetailAlreadyExistException();
-	}
+        try {
+            return service.updateUrl(userLinkDto, user.getName());
+        } catch (DataIntegrityViolationException e) {
+            throw new UrlDetailAlreadyExistException();
+        }
     }
 
     @DeleteMapping("{id}")
     public void deleteURL(@PathVariable("id") String id, Principal user) {
-	service.deleteUrl(id, user.getName());
+        service.deleteUrl(id, user.getName());
     }
 }

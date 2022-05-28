@@ -27,9 +27,9 @@ public class UserData {
     private List<String> roles;
 
     public void addRole(String role) {
-	if (roles == null) {
-	    roles = new ArrayList<>();
-	}
-	roles.add(role);
+        if (roles == null) {
+            roles = new ArrayList<>();
+        }
+        roles.add(role);
     }
 }

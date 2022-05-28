@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 public class UnauthorizedAccessException extends KeepUrlServiceException {
 
     public UnauthorizedAccessException() {
-	super(HttpStatus.FORBIDDEN, "Request is Unauthorized");
+        super(HttpStatus.FORBIDDEN, "Request is Unauthorized");
     }
 
     public UnauthorizedAccessException(String message) {
-	super(HttpStatus.FORBIDDEN, message);
+        super(HttpStatus.FORBIDDEN, message);
     }
 }

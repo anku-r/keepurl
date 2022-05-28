@@ -38,49 +38,49 @@ public class TrashServiceImpl implements TrashService {
 
     @Override
     public void moveToTrash(UserLink userLink) {
-	Trash trashLink = mapper.mapLinkToTrash(userLink);
-	repository.save(trashLink);
+        Trash trashLink = mapper.mapLinkToTrash(userLink);
+        repository.save(trashLink);
     }
 
     @Override
     @Transactional
     public void restore(String id, String user) {
-	if (userLinkDAO.existsByIdAndUser(id, user)) {
-	    throw new UrlDetailAlreadyExistException();
-	}
-	Trash trashLink = deleteTrash(id, user);
-	userLinkDAO.save(mapper.mapTrashToLink(trashLink));
+        if (userLinkDAO.existsByIdAndUser(id, user)) {
+            throw new UrlDetailAlreadyExistException();
+        }
+        Trash trashLink = deleteTrash(id, user);
+        userLinkDAO.save(mapper.mapTrashToLink(trashLink));
     }
 
     @Override
     public List<TrashDTO> getAllLinks(String user) {
-	return repository.findByUser(user).stream()
-			.map(mapper::mapEntityToDto)
-			.collect(Collectors.toList());
+        return repository.findByUser(user).stream()
+                .map(mapper::mapEntityToDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public void delete(String id, String user) {
-	deleteTrash(id, user);
+        deleteTrash(id, user);
     }
 
     private Trash deleteTrash(String id, String user) {
-	Optional<Trash> trashLink = repository.findByIdAndUser(id, user);
-	if (!trashLink.isPresent()) {
-	    throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
-	}
-	repository.delete(trashLink.get());
-	return trashLink.get();
+        Optional<Trash> trashLink = repository.findByIdAndUser(id, user);
+        if (!trashLink.isPresent()) {
+            throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
+        }
+        repository.delete(trashLink.get());
+        return trashLink.get();
     }
 
     @Override
     @Transactional
     public void trashCleanup() {
-	LocalDate dateToClean = LocalDate.now().minusDays(5);
-	List<Trash> trashLinks = repository.findByDateLessThanEqual(dateToClean);
-	logger.info("Cleaning up trash for date {}. {} URLs found", dateToClean, trashLinks.size());
-	repository.deleteAll(trashLinks);
+        LocalDate dateToClean = LocalDate.now().minusDays(5);
+        List<Trash> trashLinks = repository.findByDateLessThanEqual(dateToClean);
+        logger.info("Cleaning up trash for date {}. {} URLs found", dateToClean, trashLinks.size());
+        repository.deleteAll(trashLinks);
     }
 
 }

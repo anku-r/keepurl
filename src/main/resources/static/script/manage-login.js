@@ -1,13 +1,19 @@
+const RED = "red";
+const GREEN = "green"
+
 $(document).ready(function () {
+	
 	var urlParams = new URLSearchParams(window.location.search);
 	if (urlParams.has('error')) {
-		$("#msg").css("color", "red");
-		$("#msg").html("Invalid username or password");
+		setMessage("Invalid username or password", RED);
 	} else if (urlParams.has('logout')) {
-	    $("#msg").css("color", "green");
-		$("#msg").html("You have been logged out");
+		setMessage("You have been logged out", GREEN);
 	} else if (urlParams.has('no-user')) {
-	    $("#msg").css("color", "red");
-		$("#msg").html("No User Found");
+	    setMessage("User does not exist", RED);
+	}
+
+	const setMessage = function(message, color) {
+		$("#msg").css("color", color);
+		$("#msg").html(message);
 	}
 });

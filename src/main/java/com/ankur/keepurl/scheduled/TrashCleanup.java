@@ -17,6 +17,6 @@ public class TrashCleanup {
      */
     @Scheduled(cron = "0 0 0 * * *")
     public void execute() {
-	service.trashCleanup();
+        service.trashCleanup();
     }
 }

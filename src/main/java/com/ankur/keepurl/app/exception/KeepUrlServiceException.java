@@ -17,9 +17,9 @@ public class KeepUrlServiceException extends RuntimeException {
     private String message;
 
     public KeepUrlServiceException(String message) {
-	super(message);
-	this.status = HttpStatus.BAD_REQUEST;
-	this.message = message;
+        super(message);
+        this.status = HttpStatus.BAD_REQUEST;
+        this.message = message;
     }
 
 }

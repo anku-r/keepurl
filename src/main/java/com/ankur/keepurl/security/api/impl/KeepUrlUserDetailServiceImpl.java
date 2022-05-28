@@ -23,11 +23,11 @@ public class KeepUrlUserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-	Optional<UserData> userData = repository.findById(username);
-	if (!userData.isPresent()) {
-	    throw new UsernameNotFoundException("User Not Found");
-	}
-	return mapper.mapEntityToUserDetail(userData.get());
+        Optional<UserData> userData = repository.findById(username);
+        if (!userData.isPresent()) {
+            throw new UsernameNotFoundException("User Not Found");
+        }
+        return mapper.mapEntityToUserDetail(userData.get());
     }
 
 }
