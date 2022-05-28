@@ -1,7 +1,7 @@
 package com.ankur.keepurl.controller;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class DeploymentController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String deploy(@RequestBody LinkedHashMap<String, Object> payload) throws IOException {
+    public String deploy(@RequestBody Map<String, Object> payload) throws IOException {
 	logger.info("Github Webhook Invoked");
 	if (!payload.containsKey(BRANCH_KEY)) {
 	    logger.error("Property {} missing", BRANCH_KEY);
