@@ -2,12 +2,11 @@
 #Deployment Script. Always run this script from project directory
 
 PRETEXT=[INFO]
-LOGDIR=/appinfo/keepurl/log
-PROPFILE=/appinfo/keepurl/prop/envconfig.properties
+ENV_DIR=/appinfo/keepurl
 
 if [ "$1" == "fileout" ] 
 then
-    exec > $LOGDIR/build.log
+    exec > $ENV_DIR/log/build.log
 fi
 
 echo $PRETEXT "Running Deployment:" `date` 
@@ -16,7 +15,7 @@ echo $PRETEXT "Setting environment variables"
 while IFS='=' read -r key value
 do
     export $key=$value
-done < $PROPFILE
+done < $ENV_DIR/prop/envconfig.properties
 
 echo $PRETEXT "Pulling latest code and Firing Build"
 git pull origin main
