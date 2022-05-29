@@ -1,0 +1,2 @@
+openssl req -new -newkey rsa:2048 -nodes -keyout <private-key-file-name>.key -out <certificate-file-name>.csr
+openssl pkcs12 -export -in <pem-file-name>.pem -inkey <private-key-file-name>.key -out <pkcs12-file-name>.p12 -name "<alias-name>"

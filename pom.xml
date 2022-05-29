@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ankur</groupId>
 	<artifactId>keepurl</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.22.5</version>
 	<name>keepurl</name>
 	<description>API to store URL</description>
 
@@ -80,6 +80,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>keepurl</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
