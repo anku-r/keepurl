@@ -34,9 +34,7 @@ public class KeepUrlServiceExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Error> handleException(MethodArgumentNotValidException ex) {
         FieldError fe = ex.getBindingResult().getFieldError();
-        String validationErrorMessage = String.format(
-                "Validation failed on %s, %s", fe.getField(), fe.getDefaultMessage());
-        return exceptionResponse(HttpStatus.BAD_REQUEST, validationErrorMessage);
+        return exceptionResponse(HttpStatus.BAD_REQUEST, fe.getDefaultMessage());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

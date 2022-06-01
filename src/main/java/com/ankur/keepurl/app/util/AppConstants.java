@@ -19,4 +19,10 @@ public final class AppConstants {
     public static final String URL_NOTFOUND_MSG = "URL Details not found";
 
     public static final String URL_ID_NOTFOUND_MSG = "URL id is not present in body to update";
+
+    public static final String EMAIL_NOT_FOUND = "Email cannot be empty";  
+    
+    public static final String PASS_NOT_FOUND = "Password cannot be empty";
+
+    public static final String PASS_NOT_MATCH = "Password did not match";
 }

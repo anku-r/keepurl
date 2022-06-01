@@ -1,5 +1,8 @@
 package com.ankur.keepurl.config;
 
+import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,11 +31,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/script/manage-login*").permitAll()
+                .antMatchers("/*/*noauth*").permitAll()
+                .antMatchers("/api/userdata/register").permitAll()
                 .anyRequest().authenticated().and()
                 .httpBasic().and()
                 .formLogin().loginPage("/login").permitAll().and()
                 .logout().permitAll().and()
+                .rememberMe().tokenValiditySeconds(24 * 3600).and()
                 .csrf().disable();
     }
 

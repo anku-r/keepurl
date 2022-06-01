@@ -3,17 +3,23 @@ package com.ankur.keepurl.security.api.mapper;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ankur.keepurl.app.exception.KeepUrlServiceException;
 import com.ankur.keepurl.dataaccess.document.UserData;
+import com.ankur.keepurl.security.model.UserDataDTO;
 
 @SuppressWarnings("serial")
 @Service
 public class UserDetailMapper {
+
+	@Autowired
+	private PasswordEncoder encoder;
 
 	public UserDetails mapEntityToUserDetail(UserData userData) {
 		if (userData == null) {
@@ -58,6 +64,18 @@ public class UserDetailMapper {
 						  .collect(Collectors.toList());
 			}
 		};
+	}
+
+	public UserData mapDtoToEntity(UserDataDTO dto) {
+		if (dto == null) {
+			throw new KeepUrlServiceException("User Data has not been received");
+		}
+		UserData entity = new UserData();
+		entity.setUsername(dto.getEmail());
+		entity.setPassword(encoder.encode(dto.getPassword()));
+		entity.setIsEnabled(true);
+		entity.addRole("USER");
+		return entity;
 	}
 
 }

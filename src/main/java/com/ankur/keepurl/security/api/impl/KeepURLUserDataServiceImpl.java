@@ -4,16 +4,19 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.ankur.keepurl.app.exception.KeepUrlServiceException;
+import com.ankur.keepurl.app.util.AppConstants;
 import com.ankur.keepurl.dataaccess.document.UserData;
 import com.ankur.keepurl.dataaccess.repository.UserDataRepository;
+import com.ankur.keepurl.security.api.KeepURLUserDataService;
 import com.ankur.keepurl.security.api.mapper.UserDetailMapper;
+import com.ankur.keepurl.security.model.UserDataDTO;
 
 @Service
-public class KeepUrlUserDetailServiceImpl implements UserDetailsService {
+public class KeepURLUserDataServiceImpl implements KeepURLUserDataService {
 
     @Autowired
     private UserDataRepository repository;
@@ -30,4 +33,15 @@ public class KeepUrlUserDetailServiceImpl implements UserDetailsService {
         return mapper.mapEntityToUserDetail(userData.get());
     }
 
+    @Override
+    public void addUser(UserDataDTO userData) {
+        validateUserData(userData);
+        repository.save(mapper.mapDtoToEntity(userData));
+    }
+
+    private static void validateUserData(UserDataDTO userData) {
+        if (!userData.getPassword().equals(userData.getConfirmPassword())) {
+            throw new KeepUrlServiceException(AppConstants.PASS_NOT_MATCH);
+        } 
+    }
 }
