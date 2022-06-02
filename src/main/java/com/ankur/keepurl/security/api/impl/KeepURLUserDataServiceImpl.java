@@ -3,6 +3,7 @@ package com.ankur.keepurl.security.api.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -35,13 +36,12 @@ public class KeepURLUserDataServiceImpl implements KeepURLUserDataService {
 
     @Override
     public void addUser(UserDataDTO userData) {
-        validateUserData(userData);
-        repository.save(mapper.mapDtoToEntity(userData));
-    }
-
-    private static void validateUserData(UserDataDTO userData) {
         if (!userData.getPassword().equals(userData.getConfirmPassword())) {
             throw new KeepUrlServiceException(AppConstants.PASS_NOT_MATCH);
+        }
+        if (repository.existsById(userData.getEmail())) {
+            throw new KeepUrlServiceException(HttpStatus.CONFLICT, "Email Id is already registered");
         } 
+        repository.save(mapper.mapDtoToEntity(userData));
     }
 }
