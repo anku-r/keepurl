@@ -15,7 +15,7 @@ import com.ankur.keepurl.manager.model.TrashDTO;
 
 @RestController
 @RequestMapping("api/trash")
-public class TrashRestController {
+public class TrashController {
 
     @Autowired
     private TrashService service;

@@ -1,9 +1,5 @@
 package com.ankur.keepurl.security.model;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 

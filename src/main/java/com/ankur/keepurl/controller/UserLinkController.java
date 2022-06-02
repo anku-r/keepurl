@@ -22,7 +22,7 @@ import com.ankur.keepurl.manager.model.UserLinkDTO;
 
 @RestController
 @RequestMapping("api/userlink")
-public class UserLinkRestController {
+public class UserLinkController {
 
     @Autowired
     private UserLinkService service;

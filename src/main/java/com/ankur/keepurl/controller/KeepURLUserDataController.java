@@ -19,7 +19,8 @@ public class KeepURLUserDataController {
     private KeepURLUserDataService service;
     
     @PostMapping("register")
-    public void register(@Valid @RequestBody UserDataDTO userData) {
+    public String register(@Valid @RequestBody UserDataDTO userData) {
         service.addUser(userData);
+        return "User created. Please login";
     }
 }
