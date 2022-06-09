@@ -28,8 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/*/*noauth*").permitAll()
-                .antMatchers("/api/userdata/register").permitAll()
+                .antMatchers("/*/*noauth*", "/api/userdata/register").permitAll()
                 .anyRequest().authenticated().and()
                 .httpBasic().and()
                 .formLogin().loginPage("/login").permitAll().and()
