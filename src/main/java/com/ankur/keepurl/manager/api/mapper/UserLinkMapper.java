@@ -9,34 +9,34 @@ import com.ankur.keepurl.manager.model.UserLinkDTO;
 @Service
 public class UserLinkMapper {
 
-	public UserLinkDTO mapEntityToDto(UserLink entity) {
-		if (entity == null) {
-			return null;
-		}
-		UserLinkDTO dto = new UserLinkDTO();
-		dto.setId(entity.getId());
-		dto.setTitle(entity.getTitle());
-		dto.setUrl(entity.getUrl());
-		dto.setUser(entity.getUser());
-		return dto;
+    public UserLinkDTO mapEntityToDto(UserLink entity) {
+	if (entity == null) {
+	    return null;
 	}
+	UserLinkDTO dto = new UserLinkDTO();
+	dto.setId(entity.getId());
+	dto.setTitle(entity.getTitle());
+	dto.setUrl(entity.getUrl());
+	dto.setUser(entity.getUser());
+	return dto;
+    }
 
-	public UserLink mapDtoToEntity(UserLinkDTO dto) {
-		return mapDtoToEntity(dto, new UserLink());
-	}
+    public UserLink mapDtoToEntity(UserLinkDTO dto) {
+	return mapDtoToEntity(dto, new UserLink());
+    }
 
-	public UserLink mapDtoToEntity(UserLinkDTO dto, UserLink entity) {
-		if (dto == null) {
-			return null;
-		}
-		entity.setId(dto.getId());
-		if (dto.getTitle() == null || dto.getTitle().isEmpty()) {
-			entity.setTitle(URLUtility.fetchTitle(dto.getUrl()));
-		} else {
-			entity.setTitle(dto.getTitle());
-		}
-		entity.setUrl(dto.getUrl());
-		entity.setUser(dto.getUser());
-		return entity;
+    public UserLink mapDtoToEntity(UserLinkDTO dto, UserLink entity) {
+	if (dto == null) {
+	    return null;
 	}
+	entity.setId(dto.getId());
+	if (dto.getTitle() == null || dto.getTitle().isEmpty()) {
+	    entity.setTitle(URLUtility.fetchTitle(dto.getUrl()));
+	} else {
+	    entity.setTitle(dto.getTitle());
+	}
+	entity.setUrl(dto.getUrl());
+	entity.setUser(dto.getUser());
+	return entity;
+    }
 }

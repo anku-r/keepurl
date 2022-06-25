@@ -9,12 +9,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ViewConfig implements WebMvcConfigurer {
 
-	public void addViewControllers(ViewControllerRegistry registry) {
+    public void addViewControllers(ViewControllerRegistry registry) {
 
-		BiConsumer<String, String> viewController = (controller, view) 
-	               -> registry.addViewController(controller).setViewName(view);
+	BiConsumer<String, String> viewController = (controller, view) -> registry.addViewController(controller)
+		.setViewName(view);
 
-		viewController.accept("/trash", "trash.html");
-		viewController.accept("/login", "login.html");
-	}
+	viewController.accept("/trash", "trash.html");
+	viewController.accept("/login", "login.html");
+    }
 }

@@ -22,10 +22,11 @@ import com.ankur.keepurl.manager.api.TrashService;
 import com.ankur.keepurl.manager.api.mapper.TrashMapper;
 import com.ankur.keepurl.manager.model.TrashDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class TrashServiceImpl implements TrashService {
-
-    private static final Logger logger = LoggerFactory.getLogger(TrashService.class);
 
     @Autowired
     private TrashRepository repository;
@@ -79,8 +80,8 @@ public class TrashServiceImpl implements TrashService {
     public void trashCleanup() {
         LocalDate dateToClean = LocalDate.now().minusDays(5);
         List<Trash> trashLinks = repository.findByDateLessThanEqual(dateToClean);
-        logger.info("Cleaning up trash for date {}. {} URLs found", dateToClean, trashLinks.size());
-        repository.deleteAll(trashLinks);
+        log.info("Cleaning up trash for date {}. {} URLs found", dateToClean, trashLinks.size());
+        repository.deleteAll(trashLinks); 
     }
 
 }

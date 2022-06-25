@@ -15,38 +15,40 @@ import org.springframework.stereotype.Component;
 @Component
 public class KeepURLLoggerInterceptor {
 
-	@Pointcut("execution (* com.ankur.keepurl.manager.api.*.*(..))")
-	public void servicePackage() {}
+    @Pointcut("execution (* com.ankur.keepurl.manager.api.*.*(..))")
+    public void servicePackage() {
+    }
 
-	@Pointcut("execution (* com.ankur.keepurl.security.api.impl.*.*(..))")
-	public void securityPackage() {}
+    @Pointcut("execution (* com.ankur.keepurl.security.api.impl.*.*(..))")
+    public void securityPackage() {
+    }
 
-	@Around("servicePackage() || securityPackage()")
-	public Object aroundService(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around("servicePackage() || securityPackage()")
+    public Object aroundService(ProceedingJoinPoint joinPoint) throws Throwable {
 
-		final Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
-		final String methodName = ((MethodSignature) joinPoint.getSignature()).getMethod().getName();
+	final Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
+	final String methodName = ((MethodSignature) joinPoint.getSignature()).getMethod().getName();
 
-		if (logger.isDebugEnabled()) {
-			StringBuilder args = new StringBuilder();
-			for (Object arg : joinPoint.getArgs()) {
-				args.append(", ").append(arg.toString());
-			}
-			logger.debug("Entering Method [{}{}]", methodName, args.toString());
-		}
-		try {
-			Object returnValue = joinPoint.proceed();
-			if (logger.isDebugEnabled()) {
-				if (returnValue instanceof List<?>) {
-					logger.debug("Exiting Method [{}, {} Objects]", methodName, ((List<?>) returnValue).size());
-				} else {
-					logger.debug("Exiting Method [{}, {}]", methodName, returnValue);
-				}
-			}
-			return returnValue;
-		} catch (Throwable exception) {
-			logger.error("Exception on Method {}: {}", methodName, exception.getMessage());
-			throw exception;
-		}
+	if (logger.isDebugEnabled()) {
+	    StringBuilder args = new StringBuilder();
+	    for (Object arg : joinPoint.getArgs()) {
+		args.append(", ").append(arg.toString());
+	    }
+	    logger.debug("Entering Method [{}{}]", methodName, args.toString());
 	}
+	try {
+	    Object returnValue = joinPoint.proceed();
+	    if (logger.isDebugEnabled()) {
+		if (returnValue instanceof List<?>) {
+		    logger.debug("Exiting Method [{}, {} Objects]", methodName, ((List<?>) returnValue).size());
+		} else {
+		    logger.debug("Exiting Method [{}, {}]", methodName, returnValue);
+		}
+	    }
+	    return returnValue;
+	} catch (Throwable exception) {
+	    logger.error("Exception on Method {}: {}", methodName, exception.getMessage());
+	    throw exception;
+	}
+    }
 }
