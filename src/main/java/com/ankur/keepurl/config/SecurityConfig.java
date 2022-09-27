@@ -1,6 +1,7 @@
 package com.ankur.keepurl.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    
+    @Value("${auth.token.validity.days}")
+    private int tokenValidityDays;
 
     @Autowired
     private UserDetailsService service;
@@ -33,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().and()
                 .formLogin().loginPage("/login").permitAll().and()
                 .logout().permitAll().and()
-                .rememberMe().tokenValiditySeconds(24 * 3600).and()
+                .rememberMe().tokenValiditySeconds(86400 * tokenValidityDays).and()
                 .csrf().disable();
     }
 
