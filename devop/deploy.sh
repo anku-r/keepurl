@@ -35,4 +35,4 @@ then
     #Removing unwanted text from build.log file 
     sed -i -e 's/\\[1;34m//g' -e 's/\\[m//g' -e 's/\\[1m//g' -e 's/\\[0;36m//g' -e 's/\\[0;1m//g' -e 's/\\[0;32m//g' -e 's/\\[36m//g' -e 's/\\[0;1m//g' -e 's/\\[1;32m//g' $ENV_DIR/log/build.log	
 fi
-java -jar target/keepurl.jar
+java -Dspring.profiles.active=prod -jar target/keepurl.jar
