@@ -29,7 +29,7 @@ public class KeepURLUserDataServiceImpl implements KeepURLUserDataService {
     public UserDetails loadUserByUsername(String username) {
         Optional<UserData> userData = repository.findById(username);
         if (!userData.isPresent()) {
-            throw new UsernameNotFoundException("User Not Found");
+            throw new UsernameNotFoundException("User '" + username + "' not found");
         }
         return mapper.mapEntityToUserDetail(userData.get());
     }
