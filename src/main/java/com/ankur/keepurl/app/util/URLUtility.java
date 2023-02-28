@@ -32,4 +32,11 @@ public class URLUtility {
 	    return path.substring(1, path.indexOf('/', 1));
 	}
     }
+    
+    public static String minimizeTitle(String title) {
+	if (title.length() > 30) {
+	    return title.substring(0, 30) + "...";
+	}
+	return title;
+    }
 }

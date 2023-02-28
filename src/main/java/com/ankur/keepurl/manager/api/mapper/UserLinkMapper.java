@@ -16,6 +16,7 @@ public class UserLinkMapper {
 	UserLinkDTO dto = new UserLinkDTO();
 	dto.setId(entity.getId());
 	dto.setTitle(entity.getTitle());
+	dto.setTitleShort(entity.getTitleShort());
 	dto.setUrl(entity.getUrl());
 	dto.setUser(entity.getUser());
 	return dto;
@@ -35,6 +36,7 @@ public class UserLinkMapper {
 	} else {
 	    entity.setTitle(dto.getTitle());
 	}
+	entity.setTitleShort(URLUtility.minimizeTitle(entity.getTitle()));
 	entity.setUrl(dto.getUrl());
 	entity.setUser(dto.getUser());
 	return entity;

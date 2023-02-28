@@ -13,6 +13,8 @@ public class UserLinkDTO {
     private String id;
 
     private String title;
+    
+    private String titleShort;
 
     @NotEmpty(message = AppConstants.REQUIRED)
     private String url;

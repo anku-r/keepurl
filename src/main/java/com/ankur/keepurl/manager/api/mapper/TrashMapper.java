@@ -21,6 +21,7 @@ public class TrashMapper {
 	Trash trashLink = new Trash();
 	trashLink.setId(userLink.getId());
 	trashLink.setTitle(userLink.getTitle());
+	trashLink.setTitleShort(userLink.getTitleShort());
 	trashLink.setUrl(userLink.getUrl());
 	trashLink.setDate(LocalDate.now());
 	trashLink.setUser(userLink.getUser());
@@ -34,6 +35,7 @@ public class TrashMapper {
 	UserLink userLink = new UserLink();
 	userLink.setId(trashLink.getId());
 	userLink.setTitle(trashLink.getTitle());
+	userLink.setTitleShort(trashLink.getTitleShort());
 	userLink.setUrl(trashLink.getUrl());
 	userLink.setUser(trashLink.getUser());
 	return userLink;
@@ -46,6 +48,7 @@ public class TrashMapper {
 	TrashDTO dto = new TrashDTO();
 	dto.setId(entity.getId());
 	dto.setTitle(entity.getTitle());
+	dto.setTitleShort(entity.getTitleShort());
 	dto.setUrl(entity.getUrl());
 	dto.setDate(entity.getDate().format(format));
 	dto.setUser(entity.getUser());

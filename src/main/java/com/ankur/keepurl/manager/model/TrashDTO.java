@@ -10,6 +10,8 @@ public class TrashDTO {
     private String id;
 
     private String title;
+    
+    private String titleShort;
 
     private String url;
 
