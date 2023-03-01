@@ -9,3 +9,16 @@ body {
 .bold-text {
 	font-weight: bold;
 }
+
+.title-short { 
+	display: none; 
+}
+
+@media (max-width: 600px) {
+    .title-short { 
+    	display: inline-block; 
+    }
+    .title-long { 
+    	display: none; 
+    }
+}
