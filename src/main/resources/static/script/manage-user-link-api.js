@@ -1,6 +1,6 @@
 const TABLE_ID = "#urlList";
 const TITLE_ID = "#title"
-const endpoint = "api/userlink";
+const endpoint = "api/userlinks";
 const URL_ID = "#url";
 const CT_JSON = "application/json; charset=utf-8";
 const EMPTY = "";
