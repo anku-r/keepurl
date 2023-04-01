@@ -3,7 +3,7 @@ Run below command to generate new key and CSR file. Provide all the information 
 openssl req -new -newkey rsa:2048 -nodes -keyout <private-key-file-name>.key -out <certificate-file-name>.csr
 ```
 
-Provide CSR file to certificate authority(CA). CA will approve and provide CRT or PEM file.
+Provide CSR file to certificate authority(CA). CA will approve and provide certificate files.
 
 If PEM, run below command with PEM file and generated key to generate PKCS12 (p12) keystore with alias name, which will be used by spring boot app 
 ```
