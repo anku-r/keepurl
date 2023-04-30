@@ -12,5 +12,5 @@ openssl pkcs12 -export -in <pem-file-name>.pem -inkey <private-key-file-name>.ke
 
 If CRT, run below command with certificate files and generated key to generate PKCS12 (p12) keystore with alias name, which will be used by spring boot app
 ``` 
-openssl pkcs12 -export -in <certificate-file-name>.crt -inkey <private-key-file-name>.key -out <pkcs12-file-name>.p12 -name "<alias-name>" -certfile <CA-file-name>.cert`
+openssl pkcs12 -export -in <certificate-file-name>.crt -inkey <private-key-file-name>.key -out <pkcs12-file-name>.p12 -name "<alias-name>" -certfile <CA-file-name>.cert
 ```
