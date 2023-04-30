@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,18 +19,19 @@ import com.ankur.keepurl.manager.api.UserLinkService;
 import com.ankur.keepurl.manager.api.mapper.UserLinkMapper;
 import com.ankur.keepurl.manager.model.UserLinkDTO;
 
+import lombok.AllArgsConstructor;
+
 @Service
 @Transactional
+@AllArgsConstructor
 public class UserLinkServiceImpl implements UserLinkService {
 
-    @Autowired
-    private UserLinkRepository repository;
+  
+    private final UserLinkRepository repository;
 
-    @Autowired
-    private UserLinkMapper mapper;
+    private final UserLinkMapper mapper;
 
-    @Autowired
-    private TrashService trashService;
+    private final TrashService trashService;
 
     @Override
     public List<UserLinkDTO> getAllURLs(String user) {

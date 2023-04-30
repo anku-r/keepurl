@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/userdata")
-public class KeepURLUserDataController {
+public class UserDataController {
 
     @Autowired
     private KeepURLUserDataService service;
