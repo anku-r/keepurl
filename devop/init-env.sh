@@ -15,13 +15,13 @@ read -p "Enter Certificate Alias: " cert_alias
 read -p "Enter Certificate Password: " cert_pass
 read -p "Enter Certificate Directory: " cert_dir
 
-prop_file=envconfig.properties
+prop_file=/appinfo/keepurl/prop/envconfig.properties
 touch $prop_file
 echo "MONGO_KEEPURL_DATASOURCE=$mongo_url" >> $prop_file
 echo "LOG_LEVEL=$log_level" >> $prop_file
 echo "KEEPURL_KEYSTORE_ALIAS=$cert_alias" >> $prop_file
 echo "KEEPURL_KEYSTORE_PASSWORD=$cert_pass" >> $prop_file
-echo "KEEPURL_KEYSTORE_PATH=$cert_dir/$cert_alias" >> $prop_file
+echo "KEEPURL_KEYSTORE_PATH=$cert_dir/$cert_alias.p12" >> $prop_file
 
 mkdir $cert_dir
 openssl req -new -newkey rsa:2048 -nodes -keyout $cert_dir/$cert_alias.key -out $cert_dir/$cert_alias.csr
@@ -38,6 +38,6 @@ openssl pkcs12 -export -in $cert_dir/certificate.crt -inkey $cert_dir/$cert_alia
 
 echo "Environment prepared. Running deployment"
 cd ..
-nohup devop/deploy.sh fileout
+nohup devop/deploy.sh
 
 
