@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ankur.keepurl.manager.api.TrashService;
-import com.ankur.keepurl.manager.model.TrashDTO;
+import com.ankur.keepurl.dto.TrashDTO;
+import com.ankur.keepurl.service.TrashService;
 
 @RestController
 @RequestMapping("api/trash")

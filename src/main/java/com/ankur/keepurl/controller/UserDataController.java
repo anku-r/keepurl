@@ -2,8 +2,8 @@ package com.ankur.keepurl.controller;
 
 import javax.validation.Valid;
 
-import com.ankur.keepurl.security.api.KeepURLUserDataService;
-import com.ankur.keepurl.security.model.UserDataDTO;
+import com.ankur.keepurl.dto.UserDataDTO;
+import com.ankur.keepurl.service.KeepURLUserDataService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

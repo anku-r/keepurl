@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ankur.keepurl.app.exception.KeepUrlServiceException;
+import com.ankur.keepurl.exception.KeepUrlServiceException;
 
 import lombok.extern.slf4j.Slf4j;
 
