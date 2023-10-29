@@ -12,7 +12,7 @@ public interface TrashService {
      * 
      * @param userLink
      */
-    public void moveToTrash(UserLink userLink);
+    public void moveToTrash(String user, UserLink userLink);
 
     /**
      * Moves/Restore a book mark from trash into Userlink

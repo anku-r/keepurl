@@ -8,6 +8,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ankur.keepurl.annotation.Cached;
+import com.ankur.keepurl.annotation.EvictCache;
 import com.ankur.keepurl.dataaccess.document.UserLink;
 import com.ankur.keepurl.dataaccess.repository.UserLinkRepository;
 import com.ankur.keepurl.dto.UserLinkDTO;
@@ -34,6 +36,7 @@ public class UserLinkServiceImpl implements UserLinkService {
     private final TrashService trashService;
 
     @Override
+    @Cached(keyArgumentIndex = 0)
     public List<UserLinkDTO> getAllURLs(String user) {
 	return repository.findByUser(user).stream()
 		.map(mapper::mapEntityToDto)
@@ -50,6 +53,7 @@ public class UserLinkServiceImpl implements UserLinkService {
     }
 
     @Override
+    @EvictCache(keyArgumentIndex = 1)
     public UserLinkDTO createUrl(UserLinkDTO userLinkDto, String user) {
 	try {
 	    userLinkDto.setUser(user);
@@ -76,12 +80,13 @@ public class UserLinkServiceImpl implements UserLinkService {
     }
 
     @Override
+    @EvictCache(keyArgumentIndex = 1)
     public void deleteUrl(String id, String user) {
 	Optional<UserLink> userLink = repository.findByIdAndUser(id, user);
 	if (!userLink.isPresent()) {
 	    throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 	}
-	trashService.moveToTrash(userLink.get());
+	trashService.moveToTrash(user, userLink.get());
 	repository.delete(userLink.get());
     }
 }
