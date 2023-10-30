@@ -39,10 +39,7 @@ public class CacheManager {
     
     @After("@annotation(cachedMethod)")
     public void cacheEvict(JoinPoint joinPoint, EvictCache cachedMethod) throws Throwable {
-	String key = validateAndComputeKey(joinPoint.getArgs(), cachedMethod.keyArgumentIndex());
-	if (cache.containsKey(key)) {
-	    cache.remove(key);
-	}
+	cache.remove(validateAndComputeKey(joinPoint.getArgs(), cachedMethod.keyArgumentIndex()));
     }
     
     private static String validateAndComputeKey(Object[] args, int keyArgumentIndex) {
@@ -54,7 +51,7 @@ public class CacheManager {
 	}
 	String key = (String) args[keyArgumentIndex];
 	if (!StringUtils.hasLength(key)) {
-	    throw new IllegalArgumentException("Inavlid key. Key must not be empty for cache");
+	    throw new IllegalArgumentException("Invalid key. Key must not be empty for cache");
 	}
 	return key;
     }
