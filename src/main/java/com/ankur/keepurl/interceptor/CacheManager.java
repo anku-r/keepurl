@@ -57,8 +57,8 @@ public class CacheManager {
     }
     
     @After("@annotation(com.ankur.keepurl.annotation.EvictAll)")
-    public void evictAll() {
-	log.info("Evicting cache");
+    public void evictAll(JoinPoint joinPoint) {
+	log.info("Evicting cache - invoked via {}", joinPoint.getTarget());
 	cache.clear();
     }
 

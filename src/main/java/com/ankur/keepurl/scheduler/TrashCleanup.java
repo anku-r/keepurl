@@ -15,7 +15,7 @@ public class TrashCleanup {
     /**
      * This method will cleanup trash and is executed every day at 00:00:00
      */
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedDelay = 1000)
     public void execute() {
         service.trashCleanup();
     }
