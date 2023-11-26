@@ -1,5 +1,5 @@
 # Keep URL
-https://keepurl.ddns.net
+https://keepurl.servebeer.com
 ### Store Important links and access them anywhere
 * API to Manage Bookmarks
 * Spring Boot
