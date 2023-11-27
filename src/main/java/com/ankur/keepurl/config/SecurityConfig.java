@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").permitAll().and()
                 .logout().permitAll().and()
                 .rememberMe().tokenValiditySeconds(86400 * tokenValidityDays).and()
+                .cors().and()
                 .csrf().disable();
     }
 
