@@ -28,7 +28,7 @@ public class KeepURLUserDataServiceImpl implements KeepURLUserDataService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         Optional<UserData> userData = repository.findById(username);
-        if (!userData.isPresent()) {
+        if (userData.isEmpty()) {
             throw new UsernameNotFoundException("User '" + username + "' not found");
         }
         return mapper.mapEntityToUserDetail(userData.get());

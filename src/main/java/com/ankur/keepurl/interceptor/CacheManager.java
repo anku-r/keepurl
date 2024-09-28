@@ -1,65 +1,106 @@
 package com.ankur.keepurl.interceptor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.ankur.keepurl.dataaccess.cacheRepository.CacheRepository;
+import com.ankur.keepurl.dataaccess.document.Trash;
+import com.ankur.keepurl.dataaccess.document.UserLink;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
+import org.aspectj.lang.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import com.ankur.keepurl.annotation.Cached;
-import com.ankur.keepurl.annotation.EvictCache;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.PostConstruct;
+
 @Aspect
 @Component
-@Scope(scopeName = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 @Slf4j
+@SuppressWarnings("unchecked")
 public class CacheManager {
-    
-    private Map<String, Object> cache = new HashMap<>();
-    
+
+	@Autowired
+	private List<CacheRepository<?>> cacheRepositories;
+
+	private final Map<Class<?>, CacheRepository<?>> cacheMap = new HashMap<>();
+
+	@Pointcut("execution (* com.ankur.keepurl.dataaccess.repository.*.save(..))")
+	public void saveEntity() {}
+
+	@Pointcut("execution (* com.ankur.keepurl.dataaccess.repository.*.delete(..))")
+	public void deleteEntity() {}
+
+	@Pointcut("execution (* com.ankur.keepurl.dataaccess.repository.*.deleteAll(..))")
+	public void deleteMultipleEntities() {}
+
+	@PostConstruct
+	private void init() {
+		log.info("Initializing Cache Repositories: {}", cacheRepositories);
+		for (CacheRepository<?> cacheRepository : cacheRepositories) {
+			cacheMap.put(cacheRepository.getCacheEntity(), cacheRepository);
+		}
+	}
+
     @Around("@annotation(cachedMethod)")
     public Object cacheCheck(ProceedingJoinPoint joinPoint, Cached cachedMethod) throws Throwable {
-	String key = validateAndComputeKey(joinPoint.getArgs(), cachedMethod.keyArgumentIndex());
-	if (cache.containsKey(key)) {
-	    return cache.get(key);
-	}
-	Object object = joinPoint.proceed();
-	cache.put(key, object);
-	return object;
+		if (!cacheMap.containsKey(cachedMethod.entity())) {
+			log.info("Cache is not set up for provided entity");
+			return joinPoint.proceed();
+		}
+		String key = getKeyFromArguments(joinPoint, cachedMethod.keyArgumentIndex());
+		CacheRepository<?> cache = cacheMap.get(cachedMethod.entity());
+		if (cache.contains(key)) {
+			log.debug("Cache Hit {}: {}", cachedMethod.entity(), key);
+			return cache.get(key);
+		}
+		log.debug("Cache Miss {}: {}", cachedMethod.entity(), key);
+		Object object = joinPoint.proceed();
+		cache.put(key, object);
+		return object;
     }
-    
-    @After("@annotation(cachedMethod)")
-    public void cacheEvict(JoinPoint joinPoint, EvictCache cachedMethod) throws Throwable {
-	cache.remove(validateAndComputeKey(joinPoint.getArgs(), cachedMethod.keyArgumentIndex()));
-    }
-    
-    private static String validateAndComputeKey(Object[] args, int keyArgumentIndex) {
-	if (keyArgumentIndex < 0) {
-	    throw new IllegalArgumentException("Invalid method argument index for key");
+
+	@After("saveEntity() || deleteEntity()")
+	public void evictCacheOnEntityOperation(JoinPoint joinPoint) {
+		Object entity = joinPoint.getArgs()[0];
+		evictCache(entity);
 	}
-	if (args.length < 1 && !(args[keyArgumentIndex] instanceof String)) {
-	    throw new IllegalArgumentException("Method not applicable for the annotation @Cached");
+
+	@After("deleteMultipleEntities()")
+	public void evictCacheOnCollectionOperation(JoinPoint joinPoint) {
+		List<?> entityList = (List<?>) joinPoint.getArgs()[0];
+		entityList.forEach(this::evictCache);
 	}
-	String key = (String) args[keyArgumentIndex];
-	if (!StringUtils.hasLength(key)) {
-	    throw new IllegalArgumentException("Invalid key. Key must not be empty for cache");
+
+	private void evictCache(Object entity) {
+		if (!cacheMap.containsKey(entity.getClass())) {
+			log.info("Cache is not set up for provided entity");
+			return;
+		}
+		log.debug("Evicting Cache: {}", entity);
+		CacheRepository<?> cache = cacheMap.get(entity.getClass());
+		cache.delete(cache.getKey(entity));
 	}
-	return key;
-    }
-    
-    @After("@annotation(com.ankur.keepurl.annotation.EvictAll)")
-    public void evictAll(JoinPoint joinPoint) {
-	log.info("Evicting cache - invoked via {}", joinPoint.getTarget());
-	cache.clear();
-    }
+
+	private static String getKeyFromArguments(ProceedingJoinPoint joinPoint, int keyArgumentIndex) {
+		if (keyArgumentIndex < 0) {
+			throw new IllegalArgumentException("Invalid method argument index for key");
+		}
+		Object[] args = joinPoint.getArgs();
+		if (args.length < 1 || !(args[keyArgumentIndex] instanceof String)) {
+			throw new IllegalArgumentException("Method not applicable for the annotation @Cached");
+		}
+		String key = (String) args[keyArgumentIndex];
+		if (!StringUtils.hasLength(key)) {
+			throw new IllegalArgumentException("Invalid key. Key must not be empty for cache");
+		}
+		return key;
+	}
 
 }

@@ -18,6 +18,9 @@ import java.lang.annotation.Target;
 public @interface Cached {
 
     int keyArgumentIndex();
+
+    Class<?> entity();
+
 }
 
 

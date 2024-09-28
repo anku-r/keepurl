@@ -16,14 +16,10 @@ import org.springframework.stereotype.Component;
 public class LoggerInterceptor {
 
     @Pointcut("execution (* com.ankur.keepurl.manager.api.*.*(..))")
-    public void servicePackage() {
-    }
+    public void servicePackage() {}
 
-    @Pointcut("execution (* com.ankur.keepurl.security.api.impl.*.*(..))")
-    public void securityPackage() {
-    }
 
-    @Around("servicePackage() || securityPackage()")
+    @Around("servicePackage()")
     public Object aroundService(ProceedingJoinPoint joinPoint) throws Throwable {
 
 	final Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());

@@ -29,17 +29,16 @@ public class TrashMapper {
 	return trashLink;
     }
 
-    public UserLinkDTO mapEntityToLinkDto(Trash entity) {
-	if (entity == null) {
+    public UserLink mapTrashToUserLink(Trash trashLink) {
+	if (trashLink == null) {
 	    return null;
 	}
-	UserLinkDTO dto = new UserLinkDTO();
-	dto.setId(entity.getId());
-	dto.setTitle(entity.getTitle());
-	dto.setTitleShort(entity.getTitleShort());
-	dto.setUrl(entity.getUrl());
-	dto.setUser(entity.getUser());
-	return dto;
+	UserLink userLink = new UserLink();
+	userLink.setTitle(trashLink.getTitle());
+	userLink.setTitleShort(trashLink.getTitleShort());
+	userLink.setUrl(trashLink.getUrl());
+	userLink.setUser(trashLink.getUser());
+	return userLink;
     }
 
     public TrashDTO mapEntityToDto(Trash entity) {
