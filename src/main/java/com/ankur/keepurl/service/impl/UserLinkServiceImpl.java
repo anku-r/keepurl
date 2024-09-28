@@ -71,6 +71,7 @@ public class UserLinkServiceImpl implements UserLinkService {
 		throw new RequestNotFoundException(AppConstants.URL_NOTFOUND_MSG);
 	    }
 	    UserLink userLink = mapper.mapDtoToEntity(userLinkDto, userLinkOpt.get());
+		repository.save(userLink);
 	    return mapper.mapEntityToDto(userLink);
 	} else {
 	    throw new KeepUrlServiceException(AppConstants.URL_ID_NOTFOUND_MSG);
