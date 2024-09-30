@@ -10,7 +10,7 @@ import java.util.List;
 public class TrashCacheRepository extends CacheRepository<List<TrashDTO>> {
 
     @Override
-    public Class<?> getCacheEntity() {
+    public Class<?> getDatabaseEntity() {
         return Trash.class;
     }
 

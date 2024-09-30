@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.ankur.keepurl.dataaccess.cacheRepository.CacheRepository;
-import com.ankur.keepurl.dataaccess.document.Trash;
-import com.ankur.keepurl.dataaccess.document.UserLink;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -44,23 +42,23 @@ public class CacheManager {
 	private void init() {
 		log.info("Initializing Cache Repositories: {}", cacheRepositories);
 		for (CacheRepository<?> cacheRepository : cacheRepositories) {
-			cacheMap.put(cacheRepository.getCacheEntity(), cacheRepository);
+			cacheMap.put(cacheRepository.getDatabaseEntity(), cacheRepository);
 		}
 	}
 
     @Around("@annotation(cachedMethod)")
     public Object cacheCheck(ProceedingJoinPoint joinPoint, Cached cachedMethod) throws Throwable {
-		if (!cacheMap.containsKey(cachedMethod.entity())) {
+		if (!cacheMap.containsKey(cachedMethod.databaseEntity())) {
 			log.info("Cache is not set up for provided entity");
 			return joinPoint.proceed();
 		}
 		String key = getKeyFromArguments(joinPoint, cachedMethod.keyArgumentIndex());
-		CacheRepository<?> cache = cacheMap.get(cachedMethod.entity());
+		CacheRepository<?> cache = cacheMap.get(cachedMethod.databaseEntity());
 		if (cache.contains(key)) {
-			log.debug("Cache Hit {}: {}", cachedMethod.entity(), key);
+			log.debug("Cache Hit {}: {}", cachedMethod.databaseEntity(), key);
 			return cache.get(key);
 		}
-		log.debug("Cache Miss {}: {}", cachedMethod.entity(), key);
+		log.debug("Cache Miss {}: {}", cachedMethod.databaseEntity(), key);
 		Object object = joinPoint.proceed();
 		cache.put(key, object);
 		return object;
