@@ -8,7 +8,7 @@ public abstract class CacheRepository<T> {
 
     private Map<String, T> cache = new HashMap<>();
 
-    public abstract Class<?> getCacheEntity();
+    public abstract Class<?> getDatabaseEntity();
 
     public abstract String getKey(Object entity);
 

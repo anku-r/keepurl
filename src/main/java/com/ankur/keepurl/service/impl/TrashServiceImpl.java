@@ -49,7 +49,7 @@ public class TrashServiceImpl implements TrashService {
     }
 
     @Override
-    @Cached(keyArgumentIndex = 0, entity = Trash.class)
+    @Cached(keyArgumentIndex = 0, databaseEntity = Trash.class)
     public List<TrashDTO> getAllLinks(String user) {
         return repository.findByUser(user).stream()
                 .map(mapper::mapEntityToDto)

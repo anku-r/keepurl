@@ -35,7 +35,7 @@ public class UserLinkServiceImpl implements UserLinkService {
     private final TrashService trashService;
 
     @Override
-    @Cached(keyArgumentIndex = 0, entity = UserLink.class)
+    @Cached(keyArgumentIndex = 0, databaseEntity = UserLink.class)
     public List<UserLinkDTO> getAllURLs(String user) {
 	return repository.findByUser(user).stream()
 		.map(mapper::mapEntityToDto)

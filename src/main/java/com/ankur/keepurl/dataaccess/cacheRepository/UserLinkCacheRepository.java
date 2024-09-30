@@ -10,7 +10,7 @@ import java.util.List;
 public class UserLinkCacheRepository extends CacheRepository<List<UserLinkDTO>> {
 
     @Override
-    public Class<?> getCacheEntity() {
+    public Class<?> getDatabaseEntity() {
         return UserLink.class;
     }
 

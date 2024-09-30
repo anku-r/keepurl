@@ -2,6 +2,8 @@ package com.ankur.keepurl.service.impl;
 
 import java.util.Optional;
 
+import com.ankur.keepurl.annotation.Cached;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,7 @@ import com.ankur.keepurl.service.mapper.UserDetailMapper;
 import com.ankur.keepurl.utility.AppConstants;
 
 @Service
+@Slf4j
 public class KeepURLUserDataServiceImpl implements KeepURLUserDataService {
 
     @Autowired
@@ -26,7 +29,9 @@ public class KeepURLUserDataServiceImpl implements KeepURLUserDataService {
     private UserDetailMapper mapper;
 
     @Override
+    @Cached(keyArgumentIndex = 0, databaseEntity = UserData.class)
     public UserDetails loadUserByUsername(String username) {
+        log.debug("Getting user from DB: {}", username);
         Optional<UserData> userData = repository.findById(username);
         if (userData.isEmpty()) {
             throw new UsernameNotFoundException("User '" + username + "' not found");

@@ -19,7 +19,7 @@ public @interface Cached {
 
     int keyArgumentIndex();
 
-    Class<?> entity();
+    Class<?> databaseEntity();
 
 }
 
