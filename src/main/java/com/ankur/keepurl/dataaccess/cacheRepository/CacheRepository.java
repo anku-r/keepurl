@@ -28,4 +28,8 @@ public abstract class CacheRepository<T> {
         cache.remove(key);
     }
 
+    public void clearCache() {
+        cache.clear();
+    }
+
 }
