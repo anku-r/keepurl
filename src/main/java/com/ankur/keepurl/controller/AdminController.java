@@ -3,27 +3,27 @@ package com.ankur.keepurl.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import com.ankur.keepurl.interceptor.CacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ankur.keepurl.exception.KeepUrlServiceException;
 
 import lombok.extern.slf4j.Slf4j;
 
+import static com.ankur.keepurl.utility.AppConstants.*;
+
 @Slf4j
 @RestController
-@RequestMapping("api/deploy")
-public class DeploymentController {
+@RequestMapping("api/admin")
+@PreAuthorize("hasAuthority('ADMIN')")
+public class AdminController {
 
-    private static final String BRANCH_KEY = "ref";
-    private static final String BRANCH = "/main";
-    private static final String DEPLOYMENT_SCRIPT = "devop/deploy.sh fileout";
+	@Autowired
+	private CacheManager cacheManager;
 
-    @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+	@PostMapping("deploy")
     public String deploy(@RequestBody Map<String, Object> payload) throws IOException {
 	log.info("Github Webhook Invoked");
 	if (!payload.containsKey(BRANCH_KEY)) {
@@ -38,4 +38,10 @@ public class DeploymentController {
 	log.info("Skipping Deployment as non main branch pushed");
 	return "Deployment Skipped";
     }
+
+	@GetMapping("clearCache/{entity}")
+	public void clearCache(@PathVariable("entity") String entity) {
+		cacheManager.clearCacheForEntity(entity);
+	}
+
 }

@@ -10,11 +10,14 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.ankur.keepurl.annotation.Cached;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.PostConstruct;
 
@@ -99,6 +102,16 @@ public class CacheManager {
 			throw new IllegalArgumentException("Invalid key. Key must not be empty for cache");
 		}
 		return key;
+	}
+
+	public void clearCacheForEntity(String entityName) {
+		for (CacheRepository<?> cacheRepository : cacheRepositories) {
+			if (cacheRepository.getDatabaseEntity().getSimpleName().equals(entityName)) {
+				log.info("Clearing Cache from : {}", cacheRepository.getClass().getSimpleName());
+				cacheRepository.clearCache();
+				break;
+			}
+		}
 	}
 
 }

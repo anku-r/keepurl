@@ -25,4 +25,9 @@ public final class AppConstants {
     public static final String PASS_NOT_FOUND = "Password cannot be empty";
 
     public static final String PASS_NOT_MATCH = "Password did not match";
+
+    public static final String BRANCH_KEY = "ref";
+    public static final String BRANCH = "/main";
+    public static final String DEPLOYMENT_SCRIPT = "devop/deploy.sh fileout";
+
 }
