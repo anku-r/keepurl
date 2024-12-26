@@ -43,8 +43,8 @@ public class CacheManager {
 
 	@PostConstruct
 	private void init() {
-		log.info("Initializing Cache Repositories: {}", cacheRepositories);
 		for (CacheRepository<?> cacheRepository : cacheRepositories) {
+			log.info("Initializing Cache Repository: {}", cacheRepository);
 			cacheMap.put(cacheRepository.getDatabaseEntity(), cacheRepository);
 		}
 	}
